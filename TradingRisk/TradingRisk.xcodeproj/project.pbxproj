@@ -20,6 +20,10 @@
 		C43BD65E19B4C5630038714B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C43BD65C19B4C5630038714B /* InfoPlist.strings */; };
 		C43BD66019B4C5630038714B /* TradingRiskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD65F19B4C5630038714B /* TradingRiskTests.m */; };
 		C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43BD66919B4C5AA0038714B /* Storyboard.storyboard */; };
+		C43BD66C19B4D8530038714B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD66B19B4D8530038714B /* StoreKit.framework */; };
+		C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD66F19B4D8BE0038714B /* IAPHelper.m */; };
+		C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */; };
+		C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67719B4E0650038714B /* MasterTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +54,13 @@
 		C43BD65D19B4C5630038714B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C43BD65F19B4C5630038714B /* TradingRiskTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TradingRiskTests.m; sourceTree = "<group>"; };
 		C43BD66919B4C5AA0038714B /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		C43BD66B19B4D8530038714B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C43BD66E19B4D8BE0038714B /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		C43BD66F19B4D8BE0038714B /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		C43BD67219B4DA7E0038714B /* TradingRiskIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradingRiskIAPHelper.h; sourceTree = "<group>"; };
+		C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradingRiskIAPHelper.m; sourceTree = "<group>"; };
+		C43BD67619B4E0650038714B /* MasterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
+		C43BD67719B4E0650038714B /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43BD66C19B4D8530038714B /* StoreKit.framework in Frameworks */,
 				C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */,
 				C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */,
 				C43BD63B19B4C5630038714B /* Foundation.framework in Frameworks */,
@@ -99,6 +111,7 @@
 		C43BD63919B4C5630038714B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD66B19B4D8530038714B /* StoreKit.framework */,
 				C43BD63A19B4C5630038714B /* Foundation.framework */,
 				C43BD63C19B4C5630038714B /* CoreGraphics.framework */,
 				C43BD63E19B4C5630038714B /* UIKit.framework */,
@@ -110,6 +123,9 @@
 		C43BD64019B4C5630038714B /* TradingRisk */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD67519B4E0530038714B /* Controller */,
+				C43BD67119B4DA570038714B /* Api */,
+				C43BD66D19B4D8A90038714B /* IAP */,
 				C43BD64919B4C5630038714B /* AppDelegate.h */,
 				C43BD64A19B4C5630038714B /* AppDelegate.m */,
 				C43BD64C19B4C5630038714B /* Images.xcassets */,
@@ -145,6 +161,33 @@
 				C43BD65C19B4C5630038714B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C43BD66D19B4D8A90038714B /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD66E19B4D8BE0038714B /* IAPHelper.h */,
+				C43BD66F19B4D8BE0038714B /* IAPHelper.m */,
+			);
+			name = IAP;
+			sourceTree = "<group>";
+		};
+		C43BD67119B4DA570038714B /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD67219B4DA7E0038714B /* TradingRiskIAPHelper.h */,
+				C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */,
+			);
+			name = Api;
+			sourceTree = "<group>";
+		};
+		C43BD67519B4E0530038714B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD67619B4E0650038714B /* MasterTableViewController.h */,
+				C43BD67719B4E0650038714B /* MasterTableViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +237,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Hector;
 				TargetAttributes = {
+					C43BD63619B4C5630038714B = {
+						DevelopmentTeam = E288Q55NU2;
+					};
 					C43BD65119B4C5630038714B = {
 						TestTargetID = C43BD63619B4C5630038714B;
 					};
@@ -243,7 +289,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */,
 				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
+				C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */,
+				C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */,
 				C43BD64719B4C5630038714B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,6 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
 				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
@@ -374,6 +424,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
 				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
