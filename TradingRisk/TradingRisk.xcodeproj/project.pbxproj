@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C43BD63B19B4C5630038714B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63A19B4C5630038714B /* Foundation.framework */; };
+		C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63C19B4C5630038714B /* CoreGraphics.framework */; };
+		C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63E19B4C5630038714B /* UIKit.framework */; };
+		C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C43BD64319B4C5630038714B /* InfoPlist.strings */; };
+		C43BD64719B4C5630038714B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD64619B4C5630038714B /* main.m */; };
+		C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD64A19B4C5630038714B /* AppDelegate.m */; };
+		C43BD64D19B4C5630038714B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C43BD64C19B4C5630038714B /* Images.xcassets */; };
+		C43BD65419B4C5630038714B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD65319B4C5630038714B /* XCTest.framework */; };
+		C43BD65519B4C5630038714B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63A19B4C5630038714B /* Foundation.framework */; };
+		C43BD65619B4C5630038714B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63E19B4C5630038714B /* UIKit.framework */; };
+		C43BD65E19B4C5630038714B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C43BD65C19B4C5630038714B /* InfoPlist.strings */; };
+		C43BD66019B4C5630038714B /* TradingRiskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD65F19B4C5630038714B /* TradingRiskTests.m */; };
+		C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43BD66919B4C5AA0038714B /* Storyboard.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C43BD65719B4C5630038714B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C43BD62F19B4C5630038714B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C43BD63619B4C5630038714B;
+			remoteInfo = TradingRisk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C43BD63719B4C5630038714B /* TradingRisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradingRisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C43BD63A19B4C5630038714B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C43BD63C19B4C5630038714B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C43BD63E19B4C5630038714B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C43BD64219B4C5630038714B /* TradingRisk-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TradingRisk-Info.plist"; sourceTree = "<group>"; };
+		C43BD64419B4C5630038714B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C43BD64619B4C5630038714B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C43BD64819B4C5630038714B /* TradingRisk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TradingRisk-Prefix.pch"; sourceTree = "<group>"; };
+		C43BD64919B4C5630038714B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C43BD64A19B4C5630038714B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C43BD64C19B4C5630038714B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C43BD65219B4C5630038714B /* TradingRiskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradingRiskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C43BD65319B4C5630038714B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		C43BD65B19B4C5630038714B /* TradingRiskTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TradingRiskTests-Info.plist"; sourceTree = "<group>"; };
+		C43BD65D19B4C5630038714B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C43BD65F19B4C5630038714B /* TradingRiskTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TradingRiskTests.m; sourceTree = "<group>"; };
+		C43BD66919B4C5AA0038714B /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C43BD63419B4C5630038714B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */,
+				C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */,
+				C43BD63B19B4C5630038714B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43BD64F19B4C5630038714B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD65419B4C5630038714B /* XCTest.framework in Frameworks */,
+				C43BD65619B4C5630038714B /* UIKit.framework in Frameworks */,
+				C43BD65519B4C5630038714B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C43BD62E19B4C5630038714B = {
+			isa = PBXGroup;
+			children = (
+				C43BD66919B4C5AA0038714B /* Storyboard.storyboard */,
+				C43BD64019B4C5630038714B /* TradingRisk */,
+				C43BD65919B4C5630038714B /* TradingRiskTests */,
+				C43BD63919B4C5630038714B /* Frameworks */,
+				C43BD63819B4C5630038714B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C43BD63819B4C5630038714B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD63719B4C5630038714B /* TradingRisk.app */,
+				C43BD65219B4C5630038714B /* TradingRiskTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C43BD63919B4C5630038714B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD63A19B4C5630038714B /* Foundation.framework */,
+				C43BD63C19B4C5630038714B /* CoreGraphics.framework */,
+				C43BD63E19B4C5630038714B /* UIKit.framework */,
+				C43BD65319B4C5630038714B /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C43BD64019B4C5630038714B /* TradingRisk */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD64919B4C5630038714B /* AppDelegate.h */,
+				C43BD64A19B4C5630038714B /* AppDelegate.m */,
+				C43BD64C19B4C5630038714B /* Images.xcassets */,
+				C43BD64119B4C5630038714B /* Supporting Files */,
+			);
+			path = TradingRisk;
+			sourceTree = "<group>";
+		};
+		C43BD64119B4C5630038714B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD64219B4C5630038714B /* TradingRisk-Info.plist */,
+				C43BD64319B4C5630038714B /* InfoPlist.strings */,
+				C43BD64619B4C5630038714B /* main.m */,
+				C43BD64819B4C5630038714B /* TradingRisk-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C43BD65919B4C5630038714B /* TradingRiskTests */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD65F19B4C5630038714B /* TradingRiskTests.m */,
+				C43BD65A19B4C5630038714B /* Supporting Files */,
+			);
+			path = TradingRiskTests;
+			sourceTree = "<group>";
+		};
+		C43BD65A19B4C5630038714B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD65B19B4C5630038714B /* TradingRiskTests-Info.plist */,
+				C43BD65C19B4C5630038714B /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C43BD63619B4C5630038714B /* TradingRisk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C43BD66319B4C5630038714B /* Build configuration list for PBXNativeTarget "TradingRisk" */;
+			buildPhases = (
+				C43BD63319B4C5630038714B /* Sources */,
+				C43BD63419B4C5630038714B /* Frameworks */,
+				C43BD63519B4C5630038714B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TradingRisk;
+			productName = TradingRisk;
+			productReference = C43BD63719B4C5630038714B /* TradingRisk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C43BD65119B4C5630038714B /* TradingRiskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C43BD66619B4C5630038714B /* Build configuration list for PBXNativeTarget "TradingRiskTests" */;
+			buildPhases = (
+				C43BD64E19B4C5630038714B /* Sources */,
+				C43BD64F19B4C5630038714B /* Frameworks */,
+				C43BD65019B4C5630038714B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C43BD65819B4C5630038714B /* PBXTargetDependency */,
+			);
+			name = TradingRiskTests;
+			productName = TradingRiskTests;
+			productReference = C43BD65219B4C5630038714B /* TradingRiskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C43BD62F19B4C5630038714B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Hector;
+				TargetAttributes = {
+					C43BD65119B4C5630038714B = {
+						TestTargetID = C43BD63619B4C5630038714B;
+					};
+				};
+			};
+			buildConfigurationList = C43BD63219B4C5630038714B /* Build configuration list for PBXProject "TradingRisk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C43BD62E19B4C5630038714B;
+			productRefGroup = C43BD63819B4C5630038714B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C43BD63619B4C5630038714B /* TradingRisk */,
+				C43BD65119B4C5630038714B /* TradingRiskTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C43BD63519B4C5630038714B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */,
+				C43BD64D19B4C5630038714B /* Images.xcassets in Resources */,
+				C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43BD65019B4C5630038714B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD65E19B4C5630038714B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C43BD63319B4C5630038714B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
+				C43BD64719B4C5630038714B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C43BD64E19B4C5630038714B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C43BD66019B4C5630038714B /* TradingRiskTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C43BD65819B4C5630038714B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C43BD63619B4C5630038714B /* TradingRisk */;
+			targetProxy = C43BD65719B4C5630038714B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C43BD64319B4C5630038714B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C43BD64419B4C5630038714B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C43BD65C19B4C5630038714B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C43BD65D19B4C5630038714B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C43BD66119B4C5630038714B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C43BD66219B4C5630038714B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C43BD66419B4C5630038714B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
+				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C43BD66519B4C5630038714B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
+				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C43BD66719B4C5630038714B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TradingRisk.app/TradingRisk";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TradingRiskTests/TradingRiskTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		C43BD66819B4C5630038714B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TradingRisk.app/TradingRisk";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
+				INFOPLIST_FILE = "TradingRiskTests/TradingRiskTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C43BD63219B4C5630038714B /* Build configuration list for PBXProject "TradingRisk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C43BD66119B4C5630038714B /* Debug */,
+				C43BD66219B4C5630038714B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C43BD66319B4C5630038714B /* Build configuration list for PBXNativeTarget "TradingRisk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C43BD66419B4C5630038714B /* Debug */,
+				C43BD66519B4C5630038714B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C43BD66619B4C5630038714B /* Build configuration list for PBXNativeTarget "TradingRiskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C43BD66719B4C5630038714B /* Debug */,
+				C43BD66819B4C5630038714B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C43BD62F19B4C5630038714B /* Project object */;
+}
