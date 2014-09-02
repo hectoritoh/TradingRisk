@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TradingRiskIAPHelper.h"
 
 @implementation AppDelegate
 
@@ -16,6 +17,9 @@
 //    // Override point for customization after application launch.
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
+    
+    [TradingRiskIAPHelper sharedInstance];
+
     return YES;
 }
 
@@ -45,5 +49,8 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+ 
 
 @end

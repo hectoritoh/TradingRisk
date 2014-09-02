@@ -24,6 +24,7 @@
 		C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD66F19B4D8BE0038714B /* IAPHelper.m */; };
 		C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */; };
 		C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67719B4E0650038714B /* MasterTableViewController.m */; };
+		C43BD6B919B612140038714B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD69D19B612140038714B /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradingRiskIAPHelper.m; sourceTree = "<group>"; };
 		C43BD67619B4E0650038714B /* MasterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
 		C43BD67719B4E0650038714B /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
+		C43BD69C19B612130038714B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C43BD69D19B612140038714B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,7 @@
 		C43BD64019B4C5630038714B /* TradingRisk */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD67919B612080038714B /* Vendor */,
 				C43BD67519B4E0530038714B /* Controller */,
 				C43BD67119B4DA570038714B /* Api */,
 				C43BD66D19B4D8A90038714B /* IAP */,
@@ -190,6 +194,23 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		C43BD67919B612080038714B /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD67A19B612130038714B /* MBProgressHUD */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
+		C43BD67A19B612130038714B /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD69C19B612130038714B /* MBProgressHUD.h */,
+				C43BD69D19B612140038714B /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -237,9 +258,6 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Hector;
 				TargetAttributes = {
-					C43BD63619B4C5630038714B = {
-						DevelopmentTeam = E288Q55NU2;
-					};
 					C43BD65119B4C5630038714B = {
 						TestTargetID = C43BD63619B4C5630038714B;
 					};
@@ -292,6 +310,7 @@
 				C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */,
 				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
 				C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */,
+				C43BD6B919B612140038714B /* MBProgressHUD.m in Sources */,
 				C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */,
 				C43BD64719B4C5630038714B /* main.m in Sources */,
 			);

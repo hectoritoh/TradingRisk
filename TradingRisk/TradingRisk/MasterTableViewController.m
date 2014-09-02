@@ -10,6 +10,7 @@
 #import "TradingRiskIAPHelper.h"
 #import <StoreKit/StoreKit.h>
 
+
 @interface MasterTableViewController ()
 
 
@@ -19,7 +20,7 @@
 
 @implementation MasterTableViewController
 
-NSArray *_products;
+NSArray *_products; 
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,12 +35,21 @@ NSArray *_products;
 
 // 4
 - (void)reload {
+    
+    
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"Actualizando catalogo";
+    self.hud.dimBackground = YES;
+    
+    
     _products = nil;
     [self.tableView reloadData];
     [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
             [self.tableView reloadData];
+            [self.hud hide:YES ];
         }
         [self.refreshControl endRefreshing];
     }];
@@ -58,7 +68,7 @@ NSArray *_products;
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.title = @"In App Rage";
+    self.title = @"Trading Risk";
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
@@ -94,12 +104,40 @@ NSArray *_products;
     
     SKProduct * product = (SKProduct *) _products[indexPath.row];
     
-    UILabel * label = (UILabel *) [cell viewWithTag:10 ];
-    label.text = product.localizedTitle;
+    UILabel* titulo = (UILabel *) [cell viewWithTag:10 ];
+    titulo.text = product.localizedTitle;
+    
+    
+    UILabel* precio = (UILabel*) [  cell viewWithTag:20];
+    precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
+
+    
+    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.accessoryView = nil;
+    } else {
+        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        buyButton.frame = CGRectMake(0, 0, 72, 37);
+        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
+        buyButton.tag = indexPath.row;
+        [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.accessoryView = buyButton;
+    }
     
     return cell;
 }
 
+
+- (void)buyButtonTapped:(id)sender {
+    
+    UIButton *buyButton = (UIButton *)sender;
+    SKProduct *product = _products[buyButton.tag];
+    
+    NSLog(@"Buying %@...", product.productIdentifier);
+    [[TradingRiskIAPHelper sharedInstance] buyProduct:product];
+    
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -149,5 +187,26 @@ NSArray *_products;
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(productPurchased:) name:IAPHelperProductPurchasedNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)productPurchased:(NSNotification *)notification {
+    
+    NSString * productIdentifier = notification.object;
+    [_products enumerateObjectsUsingBlock:^(SKProduct * product, NSUInteger idx, BOOL *stop) {
+        if ([product.productIdentifier isEqualToString:productIdentifier]) {
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:idx inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+            *stop = YES;
+        }
+    }];
+    
+}
 
 @end
