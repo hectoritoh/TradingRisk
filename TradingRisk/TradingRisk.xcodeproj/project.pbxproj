@@ -25,6 +25,11 @@
 		C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */; };
 		C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67719B4E0650038714B /* MasterTableViewController.m */; };
 		C43BD6B919B612140038714B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD69D19B612140038714B /* MBProgressHUD.m */; };
+		C43BD6C619B65C040038714B /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD6C519B65C040038714B /* iCarousel.m */; };
+		C43BD6C819B65C330038714B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD6C719B65C330038714B /* QuartzCore.framework */; };
+		C43BD6CB19B65E560038714B /* banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CA19B65E560038714B /* banner.jpg */; };
+		C43BD6CE19B6627F0038714B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD6CD19B6627F0038714B /* MainViewController.m */; };
+		C43BD6D019B676B10038714B /* magazine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CF19B676B10038714B /* magazine.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +69,13 @@
 		C43BD67719B4E0650038714B /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 		C43BD69C19B612130038714B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C43BD69D19B612140038714B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C43BD6C419B65C040038714B /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		C43BD6C519B65C040038714B /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		C43BD6C719B65C330038714B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C43BD6CA19B65E560038714B /* banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner.jpg; sourceTree = "<group>"; };
+		C43BD6CC19B6627F0038714B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		C43BD6CD19B6627F0038714B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C43BD6CF19B676B10038714B /* magazine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = magazine.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43BD6C819B65C330038714B /* QuartzCore.framework in Frameworks */,
 				C43BD66C19B4D8530038714B /* StoreKit.framework in Frameworks */,
 				C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */,
 				C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */,
@@ -114,6 +127,7 @@
 		C43BD63919B4C5630038714B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD6C719B65C330038714B /* QuartzCore.framework */,
 				C43BD66B19B4D8530038714B /* StoreKit.framework */,
 				C43BD63A19B4C5630038714B /* Foundation.framework */,
 				C43BD63C19B4C5630038714B /* CoreGraphics.framework */,
@@ -126,6 +140,7 @@
 		C43BD64019B4C5630038714B /* TradingRisk */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD6C919B65E4D0038714B /* Assets */,
 				C43BD67919B612080038714B /* Vendor */,
 				C43BD67519B4E0530038714B /* Controller */,
 				C43BD67119B4DA570038714B /* Api */,
@@ -190,6 +205,8 @@
 			children = (
 				C43BD67619B4E0650038714B /* MasterTableViewController.h */,
 				C43BD67719B4E0650038714B /* MasterTableViewController.m */,
+				C43BD6CC19B6627F0038714B /* MainViewController.h */,
+				C43BD6CD19B6627F0038714B /* MainViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -197,6 +214,7 @@
 		C43BD67919B612080038714B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				C43BD6C319B65C040038714B /* iCarousel */,
 				C43BD67A19B612130038714B /* MBProgressHUD */,
 			);
 			name = Vendor;
@@ -209,6 +227,24 @@
 				C43BD69D19B612140038714B /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		C43BD6C319B65C040038714B /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD6C419B65C040038714B /* iCarousel.h */,
+				C43BD6C519B65C040038714B /* iCarousel.m */,
+			);
+			path = iCarousel;
+			sourceTree = "<group>";
+		};
+		C43BD6C919B65E4D0038714B /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C43BD6CF19B676B10038714B /* magazine.jpg */,
+				C43BD6CA19B65E560038714B /* banner.jpg */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,9 +322,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C43BD6D019B676B10038714B /* magazine.jpg in Resources */,
 				C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */,
 				C43BD64D19B4C5630038714B /* Images.xcassets in Resources */,
 				C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */,
+				C43BD6CB19B65E560038714B /* banner.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,8 +348,10 @@
 				C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */,
 				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
 				C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */,
+				C43BD6CE19B6627F0038714B /* MainViewController.m in Sources */,
 				C43BD6B919B612140038714B /* MBProgressHUD.m in Sources */,
 				C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */,
+				C43BD6C619B65C040038714B /* iCarousel.m in Sources */,
 				C43BD64719B4C5630038714B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

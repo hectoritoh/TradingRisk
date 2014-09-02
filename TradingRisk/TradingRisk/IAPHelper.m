@@ -97,11 +97,6 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     }
     
     
-    for (NSString *invalidProductId in response.invalidProductIdentifiers)
-    {
-        NSLog(@"Invalid product id: %@" , invalidProductId);
-    }
-
     
     
     NSLog(@"Loaded list of products...");
