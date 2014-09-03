@@ -11,7 +11,13 @@
 #import <StoreKit/StoreKit.h>
 
 
-@interface MasterTableViewController ()
+
+#import "ReaderBookDelegate.h"
+#import "ReaderViewController.h"
+
+
+
+@interface MasterTableViewController () <ReaderViewControllerDelegate>
 
 
 
@@ -20,7 +26,10 @@
 
 @implementation MasterTableViewController
 
-NSArray *_products; 
+
+NSArray *_products;
+ReaderViewController *readerViewController;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -92,7 +101,7 @@ NSArray *_products;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
+    
     // Return the number of rows in the section.
     return _products.count;
 }
@@ -110,7 +119,7 @@ NSArray *_products;
     
     UILabel* precio = (UILabel*) [  cell viewWithTag:20];
     precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
-
+    
     
     if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -140,53 +149,53 @@ NSArray *_products;
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -206,7 +215,47 @@ NSArray *_products;
             *stop = YES;
         }
     }];
+}
+
+
+
+-(void) cargarPdf{
+    
+    NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
+    
+	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
+    
+	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
+    
+	ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
+    
+	if (document != nil) // Must have a valid ReaderDocument object in order to proceed
+	{
+		readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
+        
+		readerViewController.delegate = self; // Set the ReaderViewController delegate to self
+        
+        readerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+		readerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        
+		[self presentViewController:readerViewController animated:YES completion:NULL];
+        
+        
+	}
     
 }
+
+#pragma mark ReaderViewControllerDelegate methods
+
+- (void)dismissReaderViewController:(ReaderViewController *)viewController
+{
+    NSLog(@"Cerrando");
+	[self dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    NSLog(@"Cerrando"); }
+
 
 @end

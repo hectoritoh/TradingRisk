@@ -11,7 +11,12 @@
 #import <StoreKit/StoreKit.h>
 
 
-@interface MainViewController ()
+#import "ReaderBookDelegate.h"
+#import "ReaderViewController.h"
+
+
+
+@interface MainViewController () <ReaderViewControllerDelegate>
 
 @end
 
@@ -19,6 +24,8 @@
 
 
 NSArray *_products;
+ReaderViewController *readerViewController;
+
 
 - (void)viewDidLoad
 {
@@ -198,6 +205,52 @@ NSArray *_products;
     }];
     
 }
+
+
+
+
+-(void) cargarPdf{
+    
+    NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
+    
+	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
+    
+	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
+    
+	ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
+    
+	if (document != nil) // Must have a valid ReaderDocument object in order to proceed
+	{
+		readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
+		readerViewController.delegate = self; // Set the ReaderViewController delegate to self
+        
+
+        
+        readerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+		readerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+
+        
+		[self presentViewController:readerViewController animated:YES completion:NULL];
+        
+        
+	}
+    
+}
+
+#pragma mark ReaderViewControllerDelegate methods
+
+- (void)dismissReaderViewController:(ReaderViewController *)viewController
+{
+    NSLog(@"Cerrando");
+	[self dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    [self cargarPdf];
+}
+
+
 
 
 @end
