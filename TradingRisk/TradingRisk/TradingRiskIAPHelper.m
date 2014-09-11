@@ -17,7 +17,10 @@
     static TradingRiskIAPHelper * sharedInstance;
     dispatch_once(&once, ^{
         NSSet * productIdentifiers = [NSSet setWithObjects:
-                                      @"tradingrisk01", @"desa.celmedia.TradingRisk.tradingrisk02",
+                                      @"tradingrisk01",
+                                      @"desa.celmedia.TradingRisk.tradingrisk02",
+                                      @"mi.revista.3" ,
+                                      @"mi.revista.4" ,                                      
                                       nil];
         sharedInstance = [[self alloc] initWithProductIdentifiers:productIdentifiers];
     });

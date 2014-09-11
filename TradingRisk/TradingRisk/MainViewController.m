@@ -8,6 +8,7 @@
 #import "MainViewController.h"
 #import "TradingRiskIAPHelper.h"
 #import <StoreKit/StoreKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "ReaderBookDelegate.h"
 #import "ReaderViewController.h"
@@ -30,6 +31,8 @@ ReaderViewController *readerViewController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+     
+
     
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
     _tableview.delegate = self;
@@ -149,9 +152,28 @@ ReaderViewController *readerViewController;
 }
 
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    return 90.0;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    
+    UIView* view = (UIView *) [cell viewWithTag:123 ];
+    
+
+    [view.layer setCornerRadius:5.0f];
+    [view.layer setMasksToBounds:YES];
+    [view.layer setBorderWidth:0.5f];
+    
+    
+    
+    
     
     SKProduct * product = (SKProduct *) _products[indexPath.row];
     
@@ -209,12 +231,26 @@ ReaderViewController *readerViewController;
         [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
         buyButton.tag = indexPath.row;
         [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.accessoryView = buyButton;
+        
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//        cell.accessoryView = buyButton;
+//        
     }
     
     return cell;
 }
+
+
+
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    [cell.contentView.layer setCornerRadius:7.0f];
+    [cell.contentView.layer setMasksToBounds:YES];
+}
+
 
 
 - (void)buyButtonTapped:(id)sender {

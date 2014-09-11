@@ -71,6 +71,9 @@
 		C43BD6CB19B65E560038714B /* banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CA19B65E560038714B /* banner.jpg */; };
 		C43BD6CE19B6627F0038714B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD6CD19B6627F0038714B /* MainViewController.m */; };
 		C43BD6D019B676B10038714B /* magazine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CF19B676B10038714B /* magazine.jpg */; };
+		C44E29AA19C1FEA600DAA103 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29A819C1FEA600DAA103 /* LaunchImage.png */; };
+		C44E29AD19C2006100DAA103 /* LaunchImageRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */; };
+		C44E29AF19C20FBD00DAA103 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AE19C20FBD00DAA103 /* banner.png */; };
 		C4AAE76C19BE31BD006C1458 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75A19BE31BD006C1458 /* AFHTTPRequestOperation.m */; };
 		C4AAE76D19BE31BD006C1458 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75C19BE31BD006C1458 /* AFHTTPRequestOperationManager.m */; };
 		C4AAE76E19BE31BD006C1458 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75E19BE31BD006C1458 /* AFHTTPSessionManager.m */; };
@@ -191,6 +194,9 @@
 		C43BD6CC19B6627F0038714B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		C43BD6CD19B6627F0038714B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		C43BD6CF19B676B10038714B /* magazine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = magazine.jpg; sourceTree = "<group>"; };
+		C44E29A819C1FEA600DAA103 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
+		C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImageRetina.png; sourceTree = "<group>"; };
+		C44E29AE19C20FBD00DAA103 /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner.png; sourceTree = "<group>"; };
 		C4AAE75919BE31BD006C1458 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		C4AAE75A19BE31BD006C1458 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		C4AAE75B19BE31BD006C1458 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -483,6 +489,9 @@
 		C43BD6C919B65E4D0038714B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				C44E29AE19C20FBD00DAA103 /* banner.png */,
+				C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */,
+				C44E29A819C1FEA600DAA103 /* LaunchImage.png */,
 				C43BD6CF19B676B10038714B /* magazine.jpg */,
 				C43BD6CA19B65E560038714B /* banner.jpg */,
 			);
@@ -591,6 +600,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C404067A19B75FB300B109DC /* Reader-Print.png in Resources */,
+				C44E29AA19C1FEA600DAA103 /* LaunchImage.png in Resources */,
 				C404067719B75FB300B109DC /* Reader-Mark-N@2x.png in Resources */,
 				C43BD6D019B676B10038714B /* magazine.jpg in Resources */,
 				C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */,
@@ -606,8 +616,10 @@
 				C404068D19B7644E00B109DC /* Reader.pdf in Resources */,
 				C404067119B75FB300B109DC /* Reader-Button-H@2x.png in Resources */,
 				C404067219B75FB300B109DC /* Reader-Button-N.png in Resources */,
+				C44E29AF19C20FBD00DAA103 /* banner.png in Resources */,
 				C404067419B75FB300B109DC /* Reader-Email.png in Resources */,
 				C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */,
+				C44E29AD19C2006100DAA103 /* LaunchImageRetina.png in Resources */,
 				C43BD6CB19B65E560038714B /* banner.jpg in Resources */,
 				C404067519B75FB300B109DC /* Reader-Email@2x.png in Resources */,
 			);
@@ -784,7 +796,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
@@ -798,7 +809,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
