@@ -14,6 +14,7 @@
 #import "ReaderViewController.h"
 
 #import "AFNetworking/AFNetworking.h"
+#import "PagedImageScrollView.h"
 
 @interface MainViewController () <ReaderViewControllerDelegate>
 
@@ -31,6 +32,17 @@ ReaderViewController *readerViewController;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
+    
+    PagedImageScrollView *pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
+    [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"], [UIImage imageNamed:@"banner2.jpg"], [UIImage imageNamed:@"banner3.jpg"], [UIImage imageNamed:@"banner4.jpg"]]];
+    //easily setting pagecontrol pos, see PageControlPosition defination in PagedImageScrollView.h
+    pageScrollView.pageControlPos = PageControlPositionCenterBottom;
+    [self.view addSubview:pageScrollView];
+    
+
      
 
     
@@ -47,10 +59,6 @@ ReaderViewController *readerViewController;
     
     [self reload];
     [self.refreshControl beginRefreshing];
-    
-    
-    
-    
     
 }
 
@@ -73,9 +81,6 @@ ReaderViewController *readerViewController;
     
     
     
-    //    NSURL *URL = [NSURL URLWithString:@"http://104.131.8.100/tradingRisk/servicio.php"];
-    //http://104.131.8.100/tradingRisk/servicio.php
-    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:@"http://104.131.8.100/tradingRisk/servicio.php"
@@ -91,15 +96,11 @@ ReaderViewController *readerViewController;
                  NSDictionary *currentObject = (NSDictionary*)object;
                  
                  [_revistas addObject:currentObject];
-                 
-                 //                 NSString *myID = [currentObject valueForKey:@"nombre"];
-                 //                 NSString *url_descarga = [currentObject valueForKey:@"url_descarga"];
-                 //                 NSString *codigo_iphone  = [currentObject valueForKey:@"codigo_iphone"];
-                 
+                
              }
              
              
-             NSLog(@"Encontrados %d registros en el servidor " , [_revistas count ]  );
+             NSLog(@"Encontrados %lu registros en el servidor " , (unsigned long)[_revistas count ]  );
              
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -185,6 +186,10 @@ ReaderViewController *readerViewController;
     precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
     
     
+    
+    UIButton* accion = (UIButton*) [ cell viewWithTag:30 ];
+    
+    
     if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
         
         
@@ -205,8 +210,13 @@ ReaderViewController *readerViewController;
             [buyButton setTitle:@"Leer" forState:UIControlStateNormal];
             buyButton.tag = indexPath.row;
             [buyButton addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = buyButton;
+
+            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+//            cell.accessoryView = buyButton;
 
             
         }else{
@@ -215,9 +225,13 @@ ReaderViewController *readerViewController;
             buyButton.frame = CGRectMake(0, 0, 72, 37);
             [buyButton setTitle:@"Descargar" forState:UIControlStateNormal];
             buyButton.tag = indexPath.row;
-            [buyButton addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryType = UITableViewCellAccessoryNone;
-            cell.accessoryView = buyButton;
+            
+            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+//            [accion addTarget:self action:@selector(mostrarDetalle:) forControlEvents:UIControlEventTouchUpInside];
+            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
+
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+//            cell.accessoryView = buyButton;
 
         }
         
@@ -226,11 +240,14 @@ ReaderViewController *readerViewController;
         
         
     } else {
-        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        buyButton.frame = CGRectMake(0, 0, 72, 37);
-        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
-        buyButton.tag = indexPath.row;
-        [buyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//        buyButton.frame = CGRectMake(0, 0, 72, 37);
+//        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
+//        buyButton.tag = indexPath.row;
+//        
+        
+
+        [accion addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
 //        cell.accessoryType = UITableViewCellAccessoryNone;
 //        cell.accessoryView = buyButton;
@@ -255,8 +272,17 @@ ReaderViewController *readerViewController;
 
 - (void)buyButtonTapped:(id)sender {
     
+    UIButton *button = (UIButton *)sender;
+
+    UITableViewCell *cell = (UITableViewCell *)button.superview.superview.superview.superview;
+    UITableView *tableView = (UITableView *)cell.superview.superview;
+    NSIndexPath *clickedButtonIndexPath = [tableView indexPathForCell:cell];
+    
+    
+    NSLog(@"  indice %ld" , (long)[clickedButtonIndexPath row ] );
+    
     UIButton *buyButton = (UIButton *)sender;
-    SKProduct *product = _products[buyButton.tag];
+    SKProduct *product = _products[ clickedButtonIndexPath.row  ];
     
     NSLog(@"Buying %@...", product.productIdentifier);
     [[TradingRiskIAPHelper sharedInstance] buyProduct:product];
@@ -357,7 +383,6 @@ ReaderViewController *readerViewController;
         
 		[self presentViewController:readerViewController animated:YES completion:NULL];
         
-        
 	}
     
 }
@@ -379,20 +404,21 @@ ReaderViewController *readerViewController;
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
 
-    NSLog(@"Evento de descarga lanzado indice %d" , [clickedButtonIndexPath row] );
+    NSLog(@"Evento de descarga lanzado indice %ld" , (long)[clickedButtonIndexPath row] );
     
     NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
     NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
     
     
     
-    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* documentsPath =
+    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: [revista  objectForKey:@"nombre_archivo" ]  ];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
     
     
-    
+//    fileExists = NO;
     
     if (!fileExists) {
         
@@ -409,14 +435,37 @@ ReaderViewController *readerViewController;
         
         NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         
+        
+        
+        NSProgress *progress;
+        
+        
         NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
             NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
             return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
             NSLog(@"File downloaded to: %@", filePath);
             self.hud.hidden=  YES ;
+            [progress removeObserver:self forKeyPath:@"fractionCompleted" context:NULL];
+            
         }];
+        
+      
+        
         [downloadTask resume];
+
+        
+        
+      
+        [downloadTask resume];
+        [progress addObserver:self
+                   forKeyPath:@"fractionCompleted"
+                      options:NSKeyValueObservingOptionNew
+                      context:NULL];
+        
+        
+        
+        
     }else{
         
         [self cargarPdf: archivoDescargar ];
@@ -427,14 +476,27 @@ ReaderViewController *readerViewController;
 
 
 
-- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
-    
-   
-    /// url de la revista a descargar
-    
-    
-    
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"fractionCompleted"]) {
+        NSProgress *progress = (NSProgress *)object;
+        NSLog(@"Progress… %f", progress.fractionCompleted);
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
+
+
+
+
+
+
+-(IBAction)mostrarDetalle:(id)sender{
+    
+    [self performSegueWithIdentifier:@"detalle" sender:self ];
+}
+
 
 
 

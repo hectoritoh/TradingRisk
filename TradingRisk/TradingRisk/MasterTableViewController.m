@@ -62,6 +62,10 @@ ReaderViewController *readerViewController;
         }
         [self.refreshControl endRefreshing];
     }];
+    
+    
+    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(hideLoading:) userInfo:nil repeats:YES];
+
 }
 
 
@@ -140,6 +144,12 @@ ReaderViewController *readerViewController;
 
 - (void)buyButtonTapped:(id)sender {
     
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"Actualizando catalogo";
+    self.hud.dimBackground = YES;
+    [self.hud show:YES];
+    
     UIButton *buyButton = (UIButton *)sender;
     SKProduct *product = _products[buyButton.tag];
     
@@ -147,6 +157,28 @@ ReaderViewController *readerViewController;
     [[TradingRiskIAPHelper sharedInstance] buyProduct:product];
     
 }
+
+
+
+
+
+-(void) hideLoading{
+    
+    
+    NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
+    NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
+    
+    if (cerrar != nil) {
+        [self.hud hide:YES];
+        [ defaults setObject:nil forKey:@"cerrar"];
+        [defaults synchronize ];
+    }
+    
+    
+    
+    
+}
+
 
 /*
  // Override to support conditional editing of the table view.

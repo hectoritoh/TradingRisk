@@ -83,6 +83,12 @@
 		C4AAE77219BE31BD006C1458 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE76719BE31BD006C1458 /* AFURLRequestSerialization.m */; };
 		C4AAE77319BE31BD006C1458 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE76919BE31BD006C1458 /* AFURLResponseSerialization.m */; };
 		C4AAE77419BE31BD006C1458 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE76B19BE31BD006C1458 /* AFURLSessionManager.m */; };
+		C4B953EE19C77F7300485B55 /* PagedImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4B953ED19C77F7300485B55 /* PagedImageScrollView.m */; };
+		C4B953F219C7827300485B55 /* banner2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C4B953EF19C7827300485B55 /* banner2.jpg */; };
+		C4B953F319C7827300485B55 /* banner3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C4B953F019C7827300485B55 /* banner3.jpg */; };
+		C4B953F419C7827300485B55 /* banner4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C4B953F119C7827300485B55 /* banner4.jpg */; };
+		C4FD4B5319C355EC00CD2F23 /* descargar.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5119C355EC00CD2F23 /* descargar.png */; };
+		C4FD4B5419C355EC00CD2F23 /* read.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5219C355EC00CD2F23 /* read.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +222,13 @@
 		C4AAE76919BE31BD006C1458 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		C4AAE76A19BE31BD006C1458 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		C4AAE76B19BE31BD006C1458 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		C4B953EC19C77F7300485B55 /* PagedImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagedImageScrollView.h; sourceTree = "<group>"; };
+		C4B953ED19C77F7300485B55 /* PagedImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedImageScrollView.m; sourceTree = "<group>"; };
+		C4B953EF19C7827300485B55 /* banner2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner2.jpg; sourceTree = "<group>"; };
+		C4B953F019C7827300485B55 /* banner3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner3.jpg; sourceTree = "<group>"; };
+		C4B953F119C7827300485B55 /* banner4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner4.jpg; sourceTree = "<group>"; };
+		C4FD4B5119C355EC00CD2F23 /* descargar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = descargar.png; sourceTree = "<group>"; };
+		C4FD4B5219C355EC00CD2F23 /* read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = read.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -460,6 +473,7 @@
 		C43BD67919B612080038714B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				C4B953EB19C77F6700485B55 /* PagedImageScrollView */,
 				C4AAE75819BE31BD006C1458 /* AFNetworking */,
 				C404062319B75EE100B109DC /* Reader */,
 				C43BD6C319B65C040038714B /* iCarousel */,
@@ -490,6 +504,11 @@
 			isa = PBXGroup;
 			children = (
 				C44E29AE19C20FBD00DAA103 /* banner.png */,
+				C4B953EF19C7827300485B55 /* banner2.jpg */,
+				C4B953F019C7827300485B55 /* banner3.jpg */,
+				C4B953F119C7827300485B55 /* banner4.jpg */,
+				C4FD4B5119C355EC00CD2F23 /* descargar.png */,
+				C4FD4B5219C355EC00CD2F23 /* read.png */,
 				C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */,
 				C44E29A819C1FEA600DAA103 /* LaunchImage.png */,
 				C43BD6CF19B676B10038714B /* magazine.jpg */,
@@ -522,6 +541,15 @@
 				C4AAE76B19BE31BD006C1458 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		C4B953EB19C77F6700485B55 /* PagedImageScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				C4B953EC19C77F7300485B55 /* PagedImageScrollView.h */,
+				C4B953ED19C77F7300485B55 /* PagedImageScrollView.m */,
+			);
+			name = PagedImageScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -603,6 +631,8 @@
 				C44E29AA19C1FEA600DAA103 /* LaunchImage.png in Resources */,
 				C404067719B75FB300B109DC /* Reader-Mark-N@2x.png in Resources */,
 				C43BD6D019B676B10038714B /* magazine.jpg in Resources */,
+				C4B953F419C7827300485B55 /* banner4.jpg in Resources */,
+				C4FD4B5319C355EC00CD2F23 /* descargar.png in Resources */,
 				C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */,
 				C404067D19B75FB300B109DC /* Reader-Thumbs@2x.png in Resources */,
 				C404067619B75FB300B109DC /* Reader-Mark-N.png in Resources */,
@@ -611,14 +641,17 @@
 				C404067919B75FB300B109DC /* Reader-Mark-Y@2x.png in Resources */,
 				C404067019B75FB300B109DC /* Reader-Button-H.png in Resources */,
 				C404067B19B75FB300B109DC /* Reader-Print@2x.png in Resources */,
+				C4B953F319C7827300485B55 /* banner3.jpg in Resources */,
 				C404067819B75FB300B109DC /* Reader-Mark-Y.png in Resources */,
 				C404067C19B75FB300B109DC /* Reader-Thumbs.png in Resources */,
 				C404068D19B7644E00B109DC /* Reader.pdf in Resources */,
+				C4FD4B5419C355EC00CD2F23 /* read.png in Resources */,
 				C404067119B75FB300B109DC /* Reader-Button-H@2x.png in Resources */,
 				C404067219B75FB300B109DC /* Reader-Button-N.png in Resources */,
 				C44E29AF19C20FBD00DAA103 /* banner.png in Resources */,
 				C404067419B75FB300B109DC /* Reader-Email.png in Resources */,
 				C43BD66A19B4C5AA0038714B /* Storyboard.storyboard in Resources */,
+				C4B953F219C7827300485B55 /* banner2.jpg in Resources */,
 				C44E29AD19C2006100DAA103 /* LaunchImageRetina.png in Resources */,
 				C43BD6CB19B65E560038714B /* banner.jpg in Resources */,
 				C404067519B75FB300B109DC /* Reader-Email@2x.png in Resources */,
@@ -679,6 +712,7 @@
 				C404065B19B75F8B00B109DC /* ReaderThumbsView.m in Sources */,
 				C404064F19B75F8B00B109DC /* ReaderContentPage.m in Sources */,
 				C404065919B75F8B00B109DC /* ReaderThumbRender.m in Sources */,
+				C4B953EE19C77F7300485B55 /* PagedImageScrollView.m in Sources */,
 				C4AAE76D19BE31BD006C1458 /* AFHTTPRequestOperationManager.m in Sources */,
 				C404064D19B75F8B00B109DC /* CGPDFDocument.m in Sources */,
 			);
