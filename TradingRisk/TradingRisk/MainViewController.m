@@ -54,12 +54,15 @@ ReaderViewController *readerViewController;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
-    [self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(acciones) forControlEvents:UIControlEventValueChanged];
     [_tableview addSubview:self.refreshControl];
     
     [self reload];
     [self.refreshControl beginRefreshing];
     
+    
+    NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(acciones) userInfo:nil repeats:YES];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -272,6 +275,18 @@ ReaderViewController *readerViewController;
 
 - (void)buyButtonTapped:(id)sender {
     
+    
+    
+    
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.mode = MBProgressHUDModeIndeterminate;
+    self.hud.labelText = @"Realizando transacción";
+    self.hud.dimBackground = YES;
+    
+    
+    
+    
+    
     UIButton *button = (UIButton *)sender;
 
     UITableViewCell *cell = (UITableViewCell *)button.superview.superview.superview.superview;
@@ -366,9 +381,9 @@ ReaderViewController *readerViewController;
     
     NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
     
-	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
-    
-	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
+//	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
+//    
+//	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
     
 	ReaderDocument *document = [ReaderDocument withDocumentFilePath:nombre_archivo password:phrase];
     
@@ -411,11 +426,18 @@ ReaderViewController *readerViewController;
     
     
     
+    
+    NSString* theFileName = [[[revista  objectForKey:@"url_descarga" ]  lastPathComponent] stringByDeletingPathExtension];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
+    
+    
     NSString* documentsPath =
     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: [revista  objectForKey:@"nombre_archivo" ]  ];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
     
     
 //    fileExists = NO;
@@ -426,6 +448,7 @@ ReaderViewController *readerViewController;
         self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         self.hud.mode = MBProgressHUDModeIndeterminate;
         self.hud.labelText = @"Descargando revista";
+        self.hud.mode = MBProgressHUDModeDeterminate;
         self.hud.dimBackground = YES;
         
         
@@ -436,39 +459,67 @@ ReaderViewController *readerViewController;
         NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         
         
-        
-        NSProgress *progress;
-        
-        
-        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-            NSLog(@"File downloaded to: %@", filePath);
-            self.hud.hidden=  YES ;
-            [progress removeObserver:self forKeyPath:@"fractionCompleted" context:NULL];
-            
-        }];
-        
       
-        
-        [downloadTask resume];
 
         
         
-      
-        [downloadTask resume];
-        [progress addObserver:self
-                   forKeyPath:@"fractionCompleted"
-                      options:NSKeyValueObservingOptionNew
-                      context:NULL];
+        AFURLConnectionOperation *operation =   [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
+        NSLog(@"archivo almacenado en la ruta %@" , filePath);
+        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:filePath append:NO];
+        
+        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+            
+            float progreso  = (float)totalBytesRead / totalBytesExpectedToRead;
+            NSLog(@"%f" , progreso);
+            self.hud.progress = progreso;
+//            progress.progress = (float)totalBytesRead / totalBytesExpectedToRead;
+            
+            
+        }];
+        
+        [operation setCompletionBlock:^{
+            NSLog(@"downloadComplete!");
+            [self.hud hide:YES];
+            
+        }];
+        [operation start];
+        
+        
+        
+        
+        
+        
+//        NSProgress *progress;
+//        
+//        
+//        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+//            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+//            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
+//        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+//            NSLog(@"File downloaded to: %@", filePath);
+//            self.hud.hidden=  YES ;
+//            [progress removeObserver:self forKeyPath:@"fractionCompleted" context:NULL];
+//            
+//        } ];
+//        
+//      
+//        
+//        [downloadTask resume];
+
+        
+        
+    
         
         
         
         
     }else{
         
-        [self cargarPdf: archivoDescargar ];
+        [self cargarPdf: filePath ];
         
     }
 }
@@ -519,6 +570,37 @@ ReaderViewController *readerViewController;
     }
 }
 
+
+
+
+
+
+-(void) acciones{
+    
+    
+    NSLog(@"BUscando acciones ");
+    NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
+    NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
+    NSString* recargar = [ defaults objectForKey:@"reload" ];
+    
+    if (cerrar != nil) {
+        [self.hud hide:YES];
+        [ defaults setObject:nil forKey:@"cerrar"];
+        [defaults synchronize ];
+        NSLog(@"Cerrar  ");
+    }
+    
+    if (recargar != nil) {
+
+        [self reload];
+        [ defaults setObject:nil forKey:@"reload"];
+        [defaults synchronize ];
+    }
+    
+    
+    
+    
+}
 
 
 

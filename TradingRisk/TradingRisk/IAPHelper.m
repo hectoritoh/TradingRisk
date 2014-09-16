@@ -117,6 +117,13 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
     
+    
+    
+    NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
+    [ defaults setObject:@"si"  forKey:@"cerrar" ];
+    [defaults synchronize];
+    
+    
     NSLog(@"Failed to load list of products.");
     _productsRequest = nil;
     
@@ -168,6 +175,11 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     
     [self provideContentForProductIdentifier:transaction.payment.productIdentifier];
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    
+    
+    NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
+    [ defaults setObject:@"si"  forKey:@"cerrar" ];
+    [defaults synchronize];
 }
 
 - (void)restoreTransaction:(SKPaymentTransaction *)transaction {
@@ -186,6 +198,10 @@ NSString *const IAPHelperProductPurchasedNotification = @"IAPHelperProductPurcha
     }
     
     [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
+    
+    NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
+    [ defaults setObject:@"si"  forKey:@"cerrar" ];
+    [defaults synchronize];
 }
 
 
