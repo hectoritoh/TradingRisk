@@ -16,6 +16,8 @@
 #import "AFNetworking/AFNetworking.h"
 #import "PagedImageScrollView.h"
 
+#import "DescargarViewController.h"
+
 @interface MainViewController () <ReaderViewControllerDelegate>
 
 @end
@@ -25,6 +27,11 @@
 
 NSArray *_products;
 NSMutableArray *_revistas;
+
+
+NSString* titulo_selected ;
+NSString* url_selected ;
+
 
 ReaderViewController *readerViewController;
 
@@ -200,9 +207,25 @@ ReaderViewController *readerViewController;
         
         NSDictionary* revista = [ _revistas objectAtIndex: [ indexPath row  ] ];
         
+        
+        
+        
+
+        NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
+        
+        
+        
+        
+        NSString* theFileName = [[[revista  objectForKey:@"url_descarga" ]  lastPathComponent] stringByDeletingPathExtension];
+        
+        
+        
+        
         NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: [revista  objectForKey:@"nombre_archivo" ]  ];
+        NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
         BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+        
+        
         
         
         
@@ -223,6 +246,8 @@ ReaderViewController *readerViewController;
 
             
         }else{
+            
+            /// DESCARGA DE ARCHIVO
         
             UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             buyButton.frame = CGRectMake(0, 0, 72, 37);
@@ -230,8 +255,8 @@ ReaderViewController *readerViewController;
             buyButton.tag = indexPath.row;
             
             [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
-//            [accion addTarget:self action:@selector(mostrarDetalle:) forControlEvents:UIControlEventTouchUpInside];
-            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
+            [accion addTarget:self action:@selector(mostrarDetalle:) forControlEvents:UIControlEventTouchUpInside];
+//            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
 
 //            cell.accessoryType = UITableViewCellAccessoryNone;
 //            cell.accessoryView = buyButton;
@@ -243,6 +268,10 @@ ReaderViewController *readerViewController;
         
         
     } else {
+        
+        //// opcion de compra
+        
+        
 //        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
 //        buyButton.frame = CGRectMake(0, 0, 72, 37);
 //        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
@@ -342,16 +371,24 @@ ReaderViewController *readerViewController;
  }
  */
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
+     
+     DescargarViewController *vc = [segue destinationViewController];
+     
+     // Pass any objects to the view controller here, like...
+     [vc setTitulo:  titulo_selected ];
+     [vc setRuta_descarga:url_selected];
+     
+     
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
  }
- */
+ 
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -528,24 +565,28 @@ ReaderViewController *readerViewController;
 
 
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"fractionCompleted"]) {
-        NSProgress *progress = (NSProgress *)object;
-        NSLog(@"Progress… %f", progress.fractionCompleted);
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
-
 
 
 
 
 -(IBAction)mostrarDetalle:(id)sender{
     
-    [self performSegueWithIdentifier:@"detalle" sender:self ];
+    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
+    
+    NSLog(@"Evento de descarga lanzado indice %ld" , (long)[clickedButtonIndexPath row] );
+    
+    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
+    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
+    
+    SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
+    
+    
+    titulo_selected = product.localizedTitle;
+    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
+    
+
+    [self performSegueWithIdentifier:@"descarga" sender:self ];
 }
 
 
@@ -581,7 +622,7 @@ ReaderViewController *readerViewController;
     NSLog(@"BUscando acciones ");
     NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
     NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
-    NSString* recargar = [ defaults objectForKey:@"reload" ];
+    NSString* recargar = [ defaults objectForKey:@"recargar" ];
     
     if (cerrar != nil) {
         [self.hud hide:YES];
@@ -593,7 +634,7 @@ ReaderViewController *readerViewController;
     if (recargar != nil) {
 
         [self reload];
-        [ defaults setObject:nil forKey:@"reload"];
+        [ defaults setObject:nil forKey:@"recargar"];
         [defaults synchronize ];
     }
     

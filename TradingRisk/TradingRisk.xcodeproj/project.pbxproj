@@ -47,7 +47,6 @@
 		C404068A19B7626200B109DC /* ReaderBookDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C404068619B7626200B109DC /* ReaderBookDelegate.m */; };
 		C404068B19B7626200B109DC /* ReaderDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C404068819B7626200B109DC /* ReaderDemoController.m */; };
 		C404068D19B7644E00B109DC /* Reader.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C404068C19B7644E00B109DC /* Reader.pdf */; };
-		C404069019B7649700B109DC /* ReadPdfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C404068F19B7649700B109DC /* ReadPdfViewController.m */; };
 		C43BD63B19B4C5630038714B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63A19B4C5630038714B /* Foundation.framework */; };
 		C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63C19B4C5630038714B /* CoreGraphics.framework */; };
 		C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63E19B4C5630038714B /* UIKit.framework */; };
@@ -64,13 +63,13 @@
 		C43BD66C19B4D8530038714B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD66B19B4D8530038714B /* StoreKit.framework */; };
 		C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD66F19B4D8BE0038714B /* IAPHelper.m */; };
 		C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */; };
-		C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD67719B4E0650038714B /* MasterTableViewController.m */; };
 		C43BD6B919B612140038714B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD69D19B612140038714B /* MBProgressHUD.m */; };
 		C43BD6C619B65C040038714B /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD6C519B65C040038714B /* iCarousel.m */; };
 		C43BD6C819B65C330038714B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD6C719B65C330038714B /* QuartzCore.framework */; };
 		C43BD6CB19B65E560038714B /* banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CA19B65E560038714B /* banner.jpg */; };
 		C43BD6CE19B6627F0038714B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C43BD6CD19B6627F0038714B /* MainViewController.m */; };
 		C43BD6D019B676B10038714B /* magazine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C43BD6CF19B676B10038714B /* magazine.jpg */; };
+		C4448BC119C8EA5000316B58 /* DescargarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4448BC019C8EA5000316B58 /* DescargarViewController.m */; };
 		C44E29AA19C1FEA600DAA103 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29A819C1FEA600DAA103 /* LaunchImage.png */; };
 		C44E29AD19C2006100DAA103 /* LaunchImageRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */; };
 		C44E29AF19C20FBD00DAA103 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AE19C20FBD00DAA103 /* banner.png */; };
@@ -165,8 +164,6 @@
 		C404068719B7626200B109DC /* ReaderDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderDemoController.h; sourceTree = "<group>"; };
 		C404068819B7626200B109DC /* ReaderDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderDemoController.m; sourceTree = "<group>"; };
 		C404068C19B7644E00B109DC /* Reader.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Reader.pdf; sourceTree = "<group>"; };
-		C404068E19B7649700B109DC /* ReadPdfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadPdfViewController.h; sourceTree = "<group>"; };
-		C404068F19B7649700B109DC /* ReadPdfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadPdfViewController.m; sourceTree = "<group>"; };
 		C43BD63719B4C5630038714B /* TradingRisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradingRisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43BD63A19B4C5630038714B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C43BD63C19B4C5630038714B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -189,8 +186,6 @@
 		C43BD66F19B4D8BE0038714B /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
 		C43BD67219B4DA7E0038714B /* TradingRiskIAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TradingRiskIAPHelper.h; sourceTree = "<group>"; };
 		C43BD67319B4DA7E0038714B /* TradingRiskIAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TradingRiskIAPHelper.m; sourceTree = "<group>"; };
-		C43BD67619B4E0650038714B /* MasterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterTableViewController.h; sourceTree = "<group>"; };
-		C43BD67719B4E0650038714B /* MasterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterTableViewController.m; sourceTree = "<group>"; };
 		C43BD69C19B612130038714B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C43BD69D19B612140038714B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		C43BD6C419B65C040038714B /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -200,6 +195,8 @@
 		C43BD6CC19B6627F0038714B /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		C43BD6CD19B6627F0038714B /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		C43BD6CF19B676B10038714B /* magazine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = magazine.jpg; sourceTree = "<group>"; };
+		C4448BBF19C8EA5000316B58 /* DescargarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DescargarViewController.h; sourceTree = "<group>"; };
+		C4448BC019C8EA5000316B58 /* DescargarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DescargarViewController.m; sourceTree = "<group>"; };
 		C44E29A819C1FEA600DAA103 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
 		C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImageRetina.png; sourceTree = "<group>"; };
 		C44E29AE19C20FBD00DAA103 /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner.png; sourceTree = "<group>"; };
@@ -460,12 +457,10 @@
 			isa = PBXGroup;
 			children = (
 				C404068219B7625100B109DC /* PdfReader */,
-				C43BD67619B4E0650038714B /* MasterTableViewController.h */,
-				C43BD67719B4E0650038714B /* MasterTableViewController.m */,
 				C43BD6CC19B6627F0038714B /* MainViewController.h */,
 				C43BD6CD19B6627F0038714B /* MainViewController.m */,
-				C404068E19B7649700B109DC /* ReadPdfViewController.h */,
-				C404068F19B7649700B109DC /* ReadPdfViewController.m */,
+				C4448BBF19C8EA5000316B58 /* DescargarViewController.h */,
+				C4448BC019C8EA5000316B58 /* DescargarViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -682,8 +677,6 @@
 				C4AAE77419BE31BD006C1458 /* AFURLSessionManager.m in Sources */,
 				C4AAE77219BE31BD006C1458 /* AFURLRequestSerialization.m in Sources */,
 				C404065D19B75F8B00B109DC /* ReaderViewController.m in Sources */,
-				C43BD67819B4E0650038714B /* MasterTableViewController.m in Sources */,
-				C404069019B7649700B109DC /* ReadPdfViewController.m in Sources */,
 				C4AAE77019BE31BD006C1458 /* AFSecurityPolicy.m in Sources */,
 				C404068B19B7626200B109DC /* ReaderDemoController.m in Sources */,
 				C404065519B75F8B00B109DC /* ReaderMainToolbar.m in Sources */,
@@ -691,6 +684,7 @@
 				C4AAE77319BE31BD006C1458 /* AFURLResponseSerialization.m in Sources */,
 				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
 				C404064E19B75F8B00B109DC /* ReaderConstants.m in Sources */,
+				C4448BC119C8EA5000316B58 /* DescargarViewController.m in Sources */,
 				C4AAE76E19BE31BD006C1458 /* AFHTTPSessionManager.m in Sources */,
 				C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */,
 				C404066019B75F8B00B109DC /* UIXToolbarView.m in Sources */,
