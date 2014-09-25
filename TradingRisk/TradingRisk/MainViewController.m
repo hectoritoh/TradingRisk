@@ -47,7 +47,7 @@ NSString *url_servicio = @"http://190.98.210.200/TradingRisk/wsdl.php" ;
  url basicas para consultar las imagenes y las revistas
  */
 NSString* url_base_slide    = @"http://190.98.210.200/TradingRisk/Archivos/img/";
-NSString* url_base_revista  = @"http://190.98.210.200/TradingRisk/Archivos/revista/";
+NSString* url_base_revista  = @"http://190.98.210.200/TradingRisk/Archivos/revistas/";
 NSString* url_base_portada    = @"http://190.98.210.200/TradingRisk/Archivos/portadas/";
 
 // url de la revista que se va a descargar
@@ -126,7 +126,10 @@ PagedImageScrollView *pageScrollView ;
 {
     [super viewDidLoad];
     
+      [self.navigationController setTitle:@"Trading Risk"];
+    
     revistas_data = [[NSMutableArray alloc] init] ;
+    
     
     pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
     [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
@@ -140,11 +143,11 @@ PagedImageScrollView *pageScrollView ;
     _tableview.dataSource = self;
     
     
-    [self.navigationController setTitle:@"Trading Risk"];
+  
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
-    [self.refreshControl addTarget:self action:@selector(acciones) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
     [_tableview addSubview:self.refreshControl];
     
     [self reload];
@@ -200,11 +203,10 @@ PagedImageScrollView *pageScrollView ;
     }];
     
     
-    _products = nil;
+//    _products = nil;
     
 
     
-    [self.tableview reloadData];
     
     
     
@@ -215,6 +217,8 @@ PagedImageScrollView *pageScrollView ;
             _products = products;
             [_tableview reloadData];
             [self.hud hide:YES ];
+            
+            [self.tableview reloadData];
         }else{
             
             
@@ -228,6 +232,7 @@ PagedImageScrollView *pageScrollView ;
             
             [alert show];
             
+            [self.tableview reloadData];
             
         }
         [self.refreshControl endRefreshing];
@@ -272,6 +277,8 @@ PagedImageScrollView *pageScrollView ;
     UIButton* accion = (UIButton*) [ cell viewWithTag:30 ];
     
     
+    NSLog(@"configuracion de celdas");
+    NSLog(@"configurando la celda de indice %d" , indexPath.row );
     
     SKProduct * product = (SKProduct *) _products[ indexPath.row ];
 
@@ -321,7 +328,7 @@ PagedImageScrollView *pageScrollView ;
         
     } else {
         
-                                NSLog(@"  revista %@ , no comprada " ,  titulo.text );
+        NSLog(@"  revista %@ , no comprada " ,  titulo.text );
         //// opcion de compra
         [accion addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -426,8 +433,10 @@ PagedImageScrollView *pageScrollView ;
 
 -(void) leerRevista:(id)sender {
 
-    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    
+    UITableViewCell *clickedCell = (UITableViewCell *)[[[[sender superview] superview] superview ]  superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
+    
     
     NSString* ruta = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
     
@@ -448,7 +457,7 @@ PagedImageScrollView *pageScrollView ;
     
 	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
     
-	ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
+	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:phrase];
 
     
 //	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil];
@@ -481,13 +490,19 @@ PagedImageScrollView *pageScrollView ;
  */
 -(IBAction)descargar:(id)sender{
     
-    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    UITableViewCell *clickedCell = (UITableViewCell *)[[[[sender superview] superview] superview ]  superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
     
     NSLog(@"Evento de descarga lanzado indice %ld" , (long)[clickedButtonIndexPath row] );
     
-    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
-    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
+    
+    NSString* ruta = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
+    
+    
+//    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
+//    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
+//    
+    NSURL *URL = [NSURL URLWithString: ruta   ];
     
     SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
     
@@ -496,10 +511,12 @@ PagedImageScrollView *pageScrollView ;
     url_selected = [ NSString stringWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga" ]  ];
     NSLog(@" url descarga revista %@" , url_selected );
     
+    url_selected = ruta ;
+    
     
     url_portada_selected = [ NSString stringWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada" ]  ];
     NSLog(@" url descarga revista %@" , url_selected );
-    
+    url_portada_selected = [self getRutaDescargaDe:@"portada" delIndice: clickedButtonIndexPath.row ];
     
     
     titulo_selected = product.localizedTitle;
@@ -531,7 +548,9 @@ PagedImageScrollView *pageScrollView ;
     
     if (recargar != nil) {
         
-        [self reload];
+//        [self reload];
+        [self.tableview reloadData];
+
         [ defaults setObject:nil forKey:@"recargar"];
         [defaults synchronize ];
     }
@@ -562,7 +581,7 @@ PagedImageScrollView *pageScrollView ;
 
 //    NSString* theFileName = [[  ruta_archivo   lastPathComponent] stringByDeletingLastPathComponent ];
     NSString* theFileName = [  ruta_archivo   pathExtension ];
-    theFileName = [[[NSFileManager defaultManager] displayNameAtPath: ruta_archivo] stringByDeletingPathExtension];
+    theFileName = [[NSFileManager defaultManager] displayNameAtPath: ruta_archivo ];
     
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];

@@ -51,7 +51,7 @@
     
     
     
-    NSString* theFileName = [[ self.ruta_descarga   lastPathComponent] stringByDeletingLastPathComponent];
+    NSString* theFileName = [ self.ruta_descarga   lastPathComponent];
     
     theFileName = [[NSFileManager defaultManager] displayNameAtPath: self.ruta_descarga];
     
