@@ -9,7 +9,7 @@
             <objects>
                 <tableViewController id="8uc-mJ-fLj" customClass="MasterTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="BTu-Y7-iUq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -56,7 +56,7 @@
                         <viewControllerLayoutGuide type="bottom" id="o2l-bo-PmA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lVM-w9-Am2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -93,16 +93,16 @@
                         <viewControllerLayoutGuide type="bottom" id="gmS-UC-4fG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleAspectFit" id="Ze7-fy-hyL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Po-w0-q7h">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <tableView clipsSubviews="YES" tag="10" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d5O-Gm-11k">
-                                <rect key="frame" x="0.0" y="162" width="320" height="318"/>
+                                <rect key="frame" x="0.0" y="162" width="320" height="406"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.64313727620000005" green="0.64313727620000005" blue="0.64313727620000005" alpha="1" colorSpace="deviceRGB"/>
@@ -150,11 +150,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3sX-mA-uXF">
+                                <rect key="frame" x="0.0" y="518" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem tag="3000" title="Item" id="cUd-Wy-2K1">
+                                        <connections>
+                                            <segue destination="D0r-FW-sa8" kind="push" identifier="mostrarInfo" id="oGN-qU-hmU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="HLc-xI-Ob1" id="agL-oj-k87"/>
+                                </connections>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Trading Risk Magazine" id="1Nf-Su-Cf2"/>
                     <connections>
+                        <outlet property="toolbar" destination="3sX-mA-uXF" id="5Kn-4n-uOb"/>
                         <segue destination="nU3-GI-gCM" kind="push" identifier="descarga" id="IRq-so-9Fv"/>
                     </connections>
                 </viewController>
@@ -171,11 +186,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Dof-uB-b03"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="CTO-PG-ymd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" tag="300" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="magazine.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="gqr-9o-KM1">
-                                <rect key="frame" x="0.0" y="81" width="320" height="296"/>
+                                <rect key="frame" x="0.0" y="81" width="320" height="384"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RW2-Jj-AbG">
@@ -205,7 +220,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prG-OT-teG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="514" y="930"/>
+            <point key="canvasLocation" x="704" y="896"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="YeN-yT-voh">
@@ -227,14 +242,81 @@
             </objects>
             <point key="canvasLocation" x="-326" y="930"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="D4I-0C-SLo">
+            <objects>
+                <viewController id="D0r-FW-sa8" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MPd-JP-pFL"/>
+                        <viewControllerLayoutGuide type="bottom" id="JEH-ru-0op"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="x7l-y7-hqs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gAE-47-5XO">
+                                <rect key="frame" x="25" y="410" width="231" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">email: 
+</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="telefono: Tel." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnT-To-1KI">
+                                <rect key="frame" x="25" y="432" width="237" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="(5255) 5638-0367" translatesAutoresizingMaskIntoConstraints="NO" id="gMd-vi-qMG">
+                                <rect key="frame" x="96" y="426" width="126" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="info@tradingandrisk.mx" translatesAutoresizingMaskIntoConstraints="NO" id="xgN-x2-bmX">
+                                <rect key="frame" x="65" y="403" width="240" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logotipo.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="O3S-cZ-k58">
+                                <rect key="frame" x="39" y="65" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBc-Jh-HUi">
+                                <rect key="frame" x="20" y="175" width="280" height="220"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Trading and Risk Magazine es una revista que nace para ser única en su tipo y género, en México y en Latinoamérica, una idea innovadora y un espacio en el que expertos reconocidos de la industria financiera compartan sus conocimientos, buscando ser un referente, imparcial, un espacio de opinión y de divulgación de temas relacionados con mercados, economía, “trading” e inversiones, administración de riesgos y de finanzas cuánticas. Buscamos mantener informado a nuestros lectores sobre las tendencias de los mercados, económica, regulatorias y de investigación, a través del pensamiento y experiencia de nuestros articulistas.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" address="YES" calendarEvent="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9fG-AG-hjK"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eOC-di-NC7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="524" y="1630"/>
+        </scene>
     </scenes>
     <resources>
         <image name="descargar.png" width="100" height="100"/>
+        <image name="logotipo.jpg" width="960" height="386"/>
         <image name="magazine.jpg" width="637" height="876"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
 </document>

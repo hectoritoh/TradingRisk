@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MainViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIToolbarDelegate>
 
 @property(retain,nonatomic) MBProgressHUD *hud;
 @property(retain,nonatomic) UITableView *tableview;
 @property(retain,nonatomic) UIRefreshControl *refreshControl;
+
+
+
+@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *verInfo;
+
+
 
 @end

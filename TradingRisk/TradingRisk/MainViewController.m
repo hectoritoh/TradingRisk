@@ -138,11 +138,19 @@ PagedImageScrollView *pageScrollView ;
     [self.view addSubview:pageScrollView];
     
     
+
+    
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
     _tableview.delegate = self;
     _tableview.dataSource = self;
     
     
+    
+    [self.verInfo setAction:@selector(mostrarInfoTradingRisk)];
+    [self.verInfo setTarget:self]; 
+    
+    
+    self.toolbar.delegate = self ; 
   
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -387,12 +395,17 @@ PagedImageScrollView *pageScrollView ;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 
+    
+    
+    if (![[segue identifier] isEqualToString:@"mostrarInfo"])
+    {
+        
     DescargarViewController *vc = [segue destinationViewController];
     
     [vc setTitulo:  titulo_selected ];
     [vc setRuta_descarga:url_selected];
     [vc setRuta_portada: url_portada_selected ];
-
+    }
 }
 
 
@@ -612,8 +625,16 @@ PagedImageScrollView *pageScrollView ;
 
 
 
+-(IBAction)mostrarInfo:(id)sender{
 
+    [self performSegueWithIdentifier:@"mostrarInfo" sender:self];
 
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+
+    NSLog(@"test");
+}
 
 
 @end
