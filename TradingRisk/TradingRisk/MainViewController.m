@@ -17,6 +17,8 @@
 #import "PagedImageScrollView.h"
 
 #import "DescargarViewController.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface MainViewController () <ReaderViewControllerDelegate>
 
@@ -27,35 +29,116 @@
 
 NSArray *_products;
 NSMutableArray *_revistas;
-
+NSMutableArray *  slider_images;
 
 NSString* titulo_selected ;
+
+NSMutableArray *  revistas_data;
+
+
+
+/**
+ *  url del servicio
+ */
+NSString *url_servicio = @"http://190.98.210.200/TradingRisk/wsdl.php" ;
+
+
+/*
+ url basicas para consultar las imagenes y las revistas
+ */
+NSString* url_base_slide    = @"http://190.98.210.200/TradingRisk/Archivos/img/";
+NSString* url_base_revista  = @"http://190.98.210.200/TradingRisk/Archivos/revista/";
+NSString* url_base_portada    = @"http://190.98.210.200/TradingRisk/Archivos/portadas/";
+
+// url de la revista que se va a descargar
 NSString* url_selected ;
 
+// url de la portada que se va a descargar
+NSString* url_portada_selected ;
 
+
+// controlador del slider
 ReaderViewController *readerViewController;
+
+// controlador del slider
+PagedImageScrollView *pageScrollView ;
+
+
+
+/**
+ *  Esta funcion carga el slider principal, primero hace request de las ruta de las imagenes y luego las carga
+ *  de forma asincronica
+ */
+-(void) cargarSlider{
+    
+    
+    slider_images = [[NSMutableArray alloc] init];
+    
+    NSMutableArray* imagenes    = [[NSMutableArray alloc] init];
+    NSMutableArray* url_banners = [[NSMutableArray alloc] init];
+    
+ 
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    NSDictionary *parameters = @{@"user": @"trading"  , @"pass": @"riskclave"  , @"metodo": @"slider"  };
+    [manager POST:  url_servicio  parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+        
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            
+            //// respuesta de la version de los slider
+            NSString * version = [  responseObject objectForKey:@"version" ];
+            
+            NSDictionary* data_banners =  [self indexKeyedDictionaryFromArray: [responseObject objectForKey:@"banner" ]  ] ;
+            
+            for (NSString* key in data_banners) {
+                
+                id value = [data_banners objectForKey:key];
+                
+                NSString* nombre_archivo = [NSString stringWithFormat:@"%@%@" , url_base_slide , [value valueForKey:@"url_banner" ] ];
+                
+                nombre_archivo=[nombre_archivo stringByReplacingOccurrencesOfString:@".png" withString:@".jpg"];
+                
+                [url_banners addObject:nombre_archivo];
+                
+                UIImageView* img_banner = [[ UIImageView alloc] initWithImage:[UIImage imageNamed:@"banner.png"]];
+                
+                [imagenes addObject:img_banner];
+                
+                NSLog(@"archivo banner %@" , nombre_archivo);
+                
+                
+            }
+            [pageScrollView setScrollViewContentsImageViews: imagenes  andUrls: url_banners  ];
+            
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", [error description ]);
+    }];
+    
+    
+}
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    revistas_data = [[NSMutableArray alloc] init] ;
     
+    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
+    [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
     
-    
-    PagedImageScrollView *pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
-    [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"], [UIImage imageNamed:@"banner2.jpg"], [UIImage imageNamed:@"banner3.jpg"], [UIImage imageNamed:@"banner4.jpg"]]];
-    //easily setting pagecontrol pos, see PageControlPosition defination in PagedImageScrollView.h
     pageScrollView.pageControlPos = PageControlPositionCenterBottom;
     [self.view addSubview:pageScrollView];
     
-
-     
-
     
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
     _tableview.delegate = self;
     _tableview.dataSource = self;
+    
     
     [self.navigationController setTitle:@"Trading Risk"];
     
@@ -68,8 +151,14 @@ ReaderViewController *readerViewController;
     [self.refreshControl beginRefreshing];
     
     
+    /**
+     *  timer que escogen los hud de loading en eventos de carga
+     */
     NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(acciones) userInfo:nil repeats:YES];
-
+    
+    
+    [self cargarSlider ];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,7 +169,7 @@ ReaderViewController *readerViewController;
 
 
 
-// 4
+
 - (void)reload {
     
     
@@ -90,38 +179,37 @@ ReaderViewController *readerViewController;
     self.hud.dimBackground = YES;
     
     
+    NSString *url_servicio = @"http://190.98.210.200/TradingRisk/wsdl.php" ;
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"http://104.131.8.100/tradingRisk/servicio.php"
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             
-             _revistas  = [[NSMutableArray alloc] init];
-             
-             NSLog(@"response type %@ " , [responseObject class] );
-             
-             for (id object in responseObject ) {
-                 NSDictionary *currentObject = (NSDictionary*)object;
-                 
-                 [_revistas addObject:currentObject];
-                
-             }
-             
-             
-             NSLog(@"Encontrados %lu registros en el servidor " , (unsigned long)[_revistas count ]  );
-             
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Error: %@", error);
-         }];
     
-    
+    NSDictionary *parameters = @{@"user": @"trading"  , @"pass": @"riskclave"  , @"metodo": @"revista"  };
+    [manager POST:  url_servicio  parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+        
+        NSLog(@"class %@ " , [responseObject class ]  );
+        
+        revistas_data = [responseObject objectForKey:@"revistas"];
+        
+        NSLog(@"data de la revista %@ ", revistas_data);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", [error description ]);
+    }];
     
     
     _products = nil;
+    
+
+    
     [self.tableview reloadData];
+    
+    
+    
+     
+    
     [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
             _products = products;
@@ -159,7 +247,7 @@ ReaderViewController *readerViewController;
 {
     
     // Return the number of rows in the section.
-    return _products.count;
+    return revistas_data.count;
 }
 
 
@@ -173,117 +261,70 @@ ReaderViewController *readerViewController;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
     UIView* view = (UIView *) [cell viewWithTag:123 ];
+    UILabel* titulo = (UILabel *) [cell viewWithTag:10 ];
+    UILabel* precio = (UILabel*) [  cell viewWithTag:20];
+    UIImageView* img_portada = (UIImageView*)[  cell viewWithTag:300 ];
     
+    UIButton* accion = (UIButton*) [ cell viewWithTag:30 ];
+    
+    
+    
+    SKProduct * product = (SKProduct *) _products[ indexPath.row ];
 
+    // border redondeados especificados mediante codigo
     [view.layer setCornerRadius:5.0f];
     [view.layer setMasksToBounds:YES];
     [view.layer setBorderWidth:0.5f];
     
     
+    NSDictionary * data = revistas_data[  indexPath.row  ] ;
     
     
+    // seteo del titulo
+    titulo.text = [ data objectForKey:@"nombre" ] ;
     
-    SKProduct * product = (SKProduct *) _products[indexPath.row];
-    
-    UILabel* titulo = (UILabel *) [cell viewWithTag:10 ];
-    titulo.text = product.localizedTitle;
-    
-    
-    UILabel* precio = (UILabel*) [  cell viewWithTag:20];
+    // seteo del precio
     precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
     
+    // url de la portada
+    NSString* url_portada = [self getRutaDescargaDe:@"portada" delIndice:indexPath.row];
+    [img_portada setImageWithURL:[NSURL URLWithString: url_portada  ]];
+    
+    // url de la descarga
+    NSString* url_revista_descarga = [self   getRutaDescargaDe:@"revista" delIndice:indexPath.row];
     
     
-    UIButton* accion = (UIButton*) [ cell viewWithTag:30 ];
-    
+    // verifica si el producto ha sido comprado
     
     if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
         
         
         
-        
-        NSDictionary* revista = [ _revistas objectAtIndex: [ indexPath row  ] ];
-        
-        
-        
-        
-
-        NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
-        
-        
-        
-        
-        NSString* theFileName = [[[revista  objectForKey:@"url_descarga" ]  lastPathComponent] stringByDeletingPathExtension];
-        
-        
-        
-        
-        NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
-        BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
-        
-        
-        
-        
-        
-        if (fileExists) {
-
-            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            buyButton.frame = CGRectMake(0, 0, 72, 37);
-            [buyButton setTitle:@"Leer" forState:UIControlStateNormal];
-            buyButton.tag = indexPath.row;
-            [buyButton addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
-
+        if ([self verificarDescargaArchivo:url_revista_descarga]) {
+            
+            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+            [accion addTarget:self action:@selector(leerRevista:) forControlEvents:UIControlEventTouchUpInside];
+            
+            NSLog(@"  revista %@ , comprada y descargada " ,  titulo.text );
+            
+        }else{
+            /// DESCARGA DE ARCHIVO
             [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
             [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
             
-            
-//            cell.accessoryType = UITableViewCellAccessoryNone;
-//            cell.accessoryView = buyButton;
-
-            
-        }else{
-            
-            /// DESCARGA DE ARCHIVO
-        
-            UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            buyButton.frame = CGRectMake(0, 0, 72, 37);
-            [buyButton setTitle:@"Descargar" forState:UIControlStateNormal];
-            buyButton.tag = indexPath.row;
-            
-            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
-            [accion addTarget:self action:@selector(mostrarDetalle:) forControlEvents:UIControlEventTouchUpInside];
-//            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
-
-//            cell.accessoryType = UITableViewCellAccessoryNone;
-//            cell.accessoryView = buyButton;
-
+                        NSLog(@"  revista %@ , comprada y no  descargada " ,  titulo.text );
         }
-        
-        
-        
-        
         
     } else {
         
+                                NSLog(@"  revista %@ , no comprada " ,  titulo.text );
         //// opcion de compra
-        
-        
-//        UIButton *buyButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//        buyButton.frame = CGRectMake(0, 0, 72, 37);
-//        [buyButton setTitle:@"Buy" forState:UIControlStateNormal];
-//        buyButton.tag = indexPath.row;
-//        
-        
-
         [accion addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
-//        cell.accessoryType = UITableViewCellAccessoryNone;
-//        cell.accessoryView = buyButton;
-//        
     }
     
     return cell;
@@ -313,11 +354,8 @@ ReaderViewController *readerViewController;
     self.hud.dimBackground = YES;
     
     
-    
-    
-    
     UIButton *button = (UIButton *)sender;
-
+    
     UITableViewCell *cell = (UITableViewCell *)button.superview.superview.superview.superview;
     UITableView *tableView = (UITableView *)cell.superview.superview;
     NSIndexPath *clickedButtonIndexPath = [tableView indexPathForCell:cell];
@@ -333,62 +371,23 @@ ReaderViewController *readerViewController;
     
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-     
-     DescargarViewController *vc = [segue destinationViewController];
-     
-     // Pass any objects to the view controller here, like...
-     [vc setTitulo:  titulo_selected ];
-     [vc setRuta_descarga:url_selected];
-     
-     
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+
+    DescargarViewController *vc = [segue destinationViewController];
+    
+    [vc setTitulo:  titulo_selected ];
+    [vc setRuta_descarga:url_selected];
+    [vc setRuta_portada: url_portada_selected ];
+
+}
+
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -414,17 +413,47 @@ ReaderViewController *readerViewController;
 
 
 
--(void) cargarPdf: (NSString*) nombre_archivo {
+#pragma mark ReaderViewControllerDelegate methods
+
+- (void)dismissReaderViewController:(ReaderViewController *)viewController
+{
+    NSLog(@"Cerrando");
+	[self dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
+
+
+-(void) leerRevista:(id)sender {
+
+    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
+    NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
+    
+    NSString* ruta = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
+    
+    
+    NSString* theFileName = [[NSFileManager defaultManager] displayNameAtPath:ruta ] ;
+    
+
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
+    
+    BOOL existe =   [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+    
+    
     
     NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
     
-//	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
-//    
-//	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
+	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
     
-	ReaderDocument *document = [ReaderDocument withDocumentFilePath:nombre_archivo password:phrase];
+	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
     
-	if (document != nil) // Must have a valid ReaderDocument object in order to proceed
+	ReaderDocument *document = [ReaderDocument withDocumentFilePath:filePath password:phrase];
+
+    
+//	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil];
+    
+	if (document != nil)
 	{
 		readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
 		readerViewController.delegate = self; // Set the ReaderViewController delegate to self
@@ -437,139 +466,20 @@ ReaderViewController *readerViewController;
         
 	}
     
-}
-
-#pragma mark ReaderViewControllerDelegate methods
-
-- (void)dismissReaderViewController:(ReaderViewController *)viewController
-{
-    NSLog(@"Cerrando");
-	[self dismissViewControllerAnimated:YES completion:NULL];
-    
-}
 
 
-
-
--(void)descargar:(id)sender {
-    
-    UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
-    NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
-
-    NSLog(@"Evento de descarga lanzado indice %ld" , (long)[clickedButtonIndexPath row] );
-    
-    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
-    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
-    
-    
-    
-    
-    NSString* theFileName = [[[revista  objectForKey:@"url_descarga" ]  lastPathComponent] stringByDeletingPathExtension];
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
-    
-    
-    NSString* documentsPath =
-    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
-    NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: [revista  objectForKey:@"nombre_archivo" ]  ];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-    
-    
-//    fileExists = NO;
-    
-    if (!fileExists) {
-        
-        /// loading
-        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        self.hud.mode = MBProgressHUDModeIndeterminate;
-        self.hud.labelText = @"Descargando revista";
-        self.hud.mode = MBProgressHUDModeDeterminate;
-        self.hud.dimBackground = YES;
-        
-        
-        
-        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-        
-        
-      
-
-        
-        
-        AFURLConnectionOperation *operation =   [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
-        NSLog(@"archivo almacenado en la ruta %@" , filePath);
-        operation.outputStream = [NSOutputStream outputStreamToFileAtPath:filePath append:NO];
-        
-        [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-            
-            float progreso  = (float)totalBytesRead / totalBytesExpectedToRead;
-            NSLog(@"%f" , progreso);
-            self.hud.progress = progreso;
-//            progress.progress = (float)totalBytesRead / totalBytesExpectedToRead;
-            
-            
-        }];
-        
-        [operation setCompletionBlock:^{
-            NSLog(@"downloadComplete!");
-            [self.hud hide:YES];
-            
-        }];
-        [operation start];
-        
-        
-        
-        
-        
-        
-//        NSProgress *progress;
-//        
-//        
-//        NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-//            NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-//            return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
-//        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-//            NSLog(@"File downloaded to: %@", filePath);
-//            self.hud.hidden=  YES ;
-//            [progress removeObserver:self forKeyPath:@"fractionCompleted" context:NULL];
-//            
-//        } ];
-//        
-//      
-//        
-//        [downloadTask resume];
-
-        
-        
-    
-        
-        
-        
-        
-    }else{
-        
-        [self cargarPdf: filePath ];
-        
-    }
 }
 
 
 
 
 
-
-
-
-
--(IBAction)mostrarDetalle:(id)sender{
+/**
+ *  muestra la pantalla de descarga de la revista
+ *
+ *  @param sender elemento que invoca la accion
+ */
+-(IBAction)descargar:(id)sender{
     
     UITableViewCell *clickedCell = (UITableViewCell *)[[sender superview] superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
@@ -582,33 +492,21 @@ ReaderViewController *readerViewController;
     SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
     
     
+    NSDictionary* data = [  revistas_data objectAtIndex: clickedButtonIndexPath.row  ];
+    url_selected = [ NSString stringWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga" ]  ];
+    NSLog(@" url descarga revista %@" , url_selected );
+    
+    
+    url_portada_selected = [ NSString stringWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada" ]  ];
+    NSLog(@" url descarga revista %@" , url_selected );
+    
+    
+    
     titulo_selected = product.localizedTitle;
-    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
+//    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
     
-
+    
     [self performSegueWithIdentifier:@"descarga" sender:self ];
-}
-
-
-
-
-/// funcion para eliminar un archivo
-- (void)removeImage:(NSString *)fileName
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
-    NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
-    NSError *error;
-    BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-    if (success) {
-        UIAlertView *removeSuccessFulAlert=[[UIAlertView alloc]initWithTitle:@"Congratulation:" message:@"Successfully removed" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-        [removeSuccessFulAlert show];
-    }
-    else
-    {
-        NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
-    }
 }
 
 
@@ -619,7 +517,7 @@ ReaderViewController *readerViewController;
 -(void) acciones{
     
     
-    NSLog(@"BUscando acciones ");
+
     NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
     NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
     NSString* recargar = [ defaults objectForKey:@"recargar" ];
@@ -632,16 +530,70 @@ ReaderViewController *readerViewController;
     }
     
     if (recargar != nil) {
-
+        
         [self reload];
         [ defaults setObject:nil forKey:@"recargar"];
         [defaults synchronize ];
     }
     
     
+}
+
+
+
+- (NSDictionary *) indexKeyedDictionaryFromArray:(NSArray *)array
+{
+    id objectInstance;
+    NSUInteger indexKey = 0U;
     
+    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
+    for (objectInstance in array)
+        [mutableDictionary setObject:objectInstance forKey:[NSNumber numberWithUnsignedInt:indexKey++]];
+    
+    return (NSDictionary *)mutableDictionary ;
+}
+
+
+
+
+
+
+-(BOOL) verificarDescargaArchivo:(NSString*) ruta_archivo {
+
+//    NSString* theFileName = [[  ruta_archivo   lastPathComponent] stringByDeletingLastPathComponent ];
+    NSString* theFileName = [  ruta_archivo   pathExtension ];
+    theFileName = [[[NSFileManager defaultManager] displayNameAtPath: ruta_archivo] stringByDeletingPathExtension];
+    
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
+    
+    return  [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+
+}
+
+
+
+
+-(NSString*) getRutaDescargaDe:(NSString*) tipo_de_ruta delIndice:(NSUInteger) indice{
+    
+    NSDictionary* data = [revistas_data objectAtIndex:indice] ;
+    NSString* url = @"";
+    
+    if ([tipo_de_ruta isEqualToString:@"portada"]) {
+        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada"] ];
+    }
+    
+    if ([tipo_de_ruta isEqualToString:@"revista"]) {
+        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga"] ];
+    }
+    
+    return url ;
     
 }
+
+
+
+
 
 
 

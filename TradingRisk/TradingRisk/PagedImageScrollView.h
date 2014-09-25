@@ -22,4 +22,5 @@ enum PageControlPosition {
 @property (nonatomic, assign) enum PageControlPosition pageControlPos; //default is PageControlPositionRightCorner
 
 - (void)setScrollViewContents: (NSArray *)images;
+- (void)setScrollViewContentsImageViews: (NSArray *)images andUrls: (NSArray *)urls;
 @end

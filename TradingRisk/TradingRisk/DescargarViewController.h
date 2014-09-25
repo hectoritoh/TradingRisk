@@ -19,6 +19,8 @@
 
 
 @property(retain,nonatomic) NSString * ruta_descarga;
+@property(retain,nonatomic) NSString * ruta_portada;
+
 @property(retain,nonatomic) NSString * titulo;
 
 

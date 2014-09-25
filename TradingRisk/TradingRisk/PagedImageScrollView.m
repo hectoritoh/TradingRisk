@@ -7,6 +7,8 @@
 //
 
 #import "PagedImageScrollView.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface PagedImageScrollView() <UIScrollViewDelegate>
 @property (nonatomic) BOOL pageControlIsChangingPage;
@@ -23,6 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
+        self.scrollView.bounces = NO ;
         self.pageControl = [[UIPageControl alloc] init];
         [self setDefaults];
         [self.pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
@@ -81,6 +84,38 @@
     //call pagecontrolpos setter.
     self.pageControlPos = self.pageControlPos;
 }
+
+
+
+
+- (void)setScrollViewContentsImageViews: (NSArray *)images andUrls: (NSArray *)urls
+{
+    //remove original subviews first.
+    for (UIView *subview in [self.scrollView subviews]) {
+        [subview removeFromSuperview];
+    }
+    if (images.count <= 0) {
+        self.pageControl.numberOfPages = 0;
+        return;
+    }
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * images.count, self.scrollView.frame.size.height);
+    for (int i = 0; i < images.count; i++) {
+        
+        UIImageView * imageView = images[i];
+        imageView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height) ;
+        
+
+        [imageView setImageWithURL:[NSURL URLWithString: urls[i]  ]];
+
+
+        [self.scrollView addSubview: imageView  ];
+        
+    }
+    self.pageControl.numberOfPages = images.count;
+    //call pagecontrolpos setter.
+    self.pageControlPos = self.pageControlPos;
+}
+
 
 - (void)changePage:(UIPageControl *)sender
 {

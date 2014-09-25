@@ -8,6 +8,7 @@
 
 #import "DescargarViewController.h"
 #import "AFNetworking/AFNetworking.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface DescargarViewController ()
 
@@ -28,6 +29,12 @@
 
     
     
+    // codigo que descarga la portada de la revista 
+    UIImageView * portada = (UIImageView*) [self.view viewWithTag:300  ];
+    NSURL* url_portada = [[NSURL alloc] initWithString:self.ruta_portada];
+    [portada setImageWithURL: url_portada ] ;
+    
+    
     self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.hud.mode = MBProgressHUDModeIndeterminate;
     self.hud.labelText = @"Descargando revista";
@@ -44,7 +51,11 @@
     
     
     
-    NSString* theFileName = [[ self.ruta_descarga   lastPathComponent] stringByDeletingPathExtension];
+    NSString* theFileName = [[ self.ruta_descarga   lastPathComponent] stringByDeletingLastPathComponent];
+    
+    theFileName = [[NSFileManager defaultManager] displayNameAtPath: self.ruta_descarga];
+    
+    
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
@@ -69,6 +80,7 @@
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
 //    NSLog(@"archivo almacenado en la ruta %@" , filePath);
+    
     operation.outputStream = [NSOutputStream outputStreamToFileAtPath:filePath append:NO];
     
     [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
