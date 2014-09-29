@@ -124,7 +124,7 @@
 	{
 		NSInteger pages = [document.pageCount integerValue]; // Total pages
 
-		NSString *format = NSLocalizedString(@"%i of %i", @"format"); // Format
+		NSString *format = NSLocalizedString(@"%i de %i", @"format"); // Format
 
 		NSString *number = [NSString stringWithFormat:format, page, pages]; // Text
 

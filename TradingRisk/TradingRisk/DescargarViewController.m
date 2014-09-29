@@ -18,6 +18,10 @@
 
 
 
+NSString * ruta_temporal = @"";
+NSString * ruta_final = @"";
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,7 +62,17 @@
     
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    
     NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
+    
+    ruta_final = [  [NSString alloc] initWithString:filePath ];
+    ruta_temporal = [[NSString alloc] initWithFormat:@"%@%@", filePath , @".tmp" ];
+    
+    
+    
+    
+    
     
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
     
@@ -81,7 +95,7 @@
 //    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent: theFileName  ];
 //    NSLog(@"archivo almacenado en la ruta %@" , filePath);
     
-    operation.outputStream = [NSOutputStream outputStreamToFileAtPath:filePath append:NO];
+    operation.outputStream = [NSOutputStream outputStreamToFileAtPath:ruta_temporal append:NO];
     
     [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         
@@ -99,6 +113,13 @@
     
     [operation setCompletionBlock:^{
         NSLog(@"downloadComplete!");
+        
+        
+        NSError *error;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        [fileManager copyItemAtPath:ruta_temporal toPath:ruta_final error:&error];
+
         [self.hud hide:YES];
         NSUserDefaults* defautls = [NSUserDefaults standardUserDefaults ];
         [defautls setObject:@"si" forKey:@"recargar"];

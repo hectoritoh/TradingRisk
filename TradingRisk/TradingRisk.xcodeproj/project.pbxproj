@@ -95,6 +95,7 @@
 		C4CD850C19D0B78A00746D7B /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850219D0B78A00746D7B /* UIProgressView+AFNetworking.m */; };
 		C4CD850D19D0B78A00746D7B /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850419D0B78A00746D7B /* UIRefreshControl+AFNetworking.m */; };
 		C4CD850E19D0B78A00746D7B /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850619D0B78A00746D7B /* UIWebView+AFNetworking.m */; };
+		C4F86AE319D9C1D60078AE60 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F86AE219D9C1D60078AE60 /* AboutViewController.m */; };
 		C4FD4B5319C355EC00CD2F23 /* descargar.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5119C355EC00CD2F23 /* descargar.png */; };
 		C4FD4B5419C355EC00CD2F23 /* read.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5219C355EC00CD2F23 /* read.png */; };
 /* End PBXBuildFile section */
@@ -251,6 +252,8 @@
 		C4CD850419D0B78A00746D7B /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		C4CD850519D0B78A00746D7B /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		C4CD850619D0B78A00746D7B /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		C4F86AE119D9C1D60078AE60 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		C4F86AE219D9C1D60078AE60 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		C4FD4B5119C355EC00CD2F23 /* descargar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = descargar.png; sourceTree = "<group>"; };
 		C4FD4B5219C355EC00CD2F23 /* read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = read.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -489,6 +492,8 @@
 				C43BD6CD19B6627F0038714B /* MainViewController.m */,
 				C4448BBF19C8EA5000316B58 /* DescargarViewController.h */,
 				C4448BC019C8EA5000316B58 /* DescargarViewController.m */,
+				C4F86AE119D9C1D60078AE60 /* AboutViewController.h */,
+				C4F86AE219D9C1D60078AE60 /* AboutViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -766,6 +771,7 @@
 				C4AAE76C19BE31BD006C1458 /* AFHTTPRequestOperation.m in Sources */,
 				C404065019B75F8B00B109DC /* ReaderContentTile.m in Sources */,
 				C404065119B75F8B00B109DC /* ReaderContentView.m in Sources */,
+				C4F86AE319D9C1D60078AE60 /* AboutViewController.m in Sources */,
 				C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */,
 				C43BD6C619B65C040038714B /* iCarousel.m in Sources */,
 				C4CD850E19D0B78A00746D7B /* UIWebView+AFNetworking.m in Sources */,

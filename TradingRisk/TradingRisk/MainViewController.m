@@ -77,7 +77,7 @@ PagedImageScrollView *pageScrollView ;
     NSMutableArray* imagenes    = [[NSMutableArray alloc] init];
     NSMutableArray* url_banners = [[NSMutableArray alloc] init];
     
- 
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     NSDictionary *parameters = @{@"user": @"trading"  , @"pass": @"riskclave"  , @"metodo": @"slider"  };
@@ -112,6 +112,9 @@ PagedImageScrollView *pageScrollView ;
             }
             [pageScrollView setScrollViewContentsImageViews: imagenes  andUrls: url_banners  ];
             
+            NSTimer *aTimerSlider = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(cambiarSlider) userInfo:nil repeats:YES];
+            
+            
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -126,19 +129,19 @@ PagedImageScrollView *pageScrollView ;
 {
     [super viewDidLoad];
     
-      [self.navigationController setTitle:@"Trading Risk"];
+    [self.navigationController setTitle:@"Trading Risk"];
     
     revistas_data = [[NSMutableArray alloc] init] ;
     
     
-    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 160)];
+    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, 320, 160)];
     [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
     
     pageScrollView.pageControlPos = PageControlPositionCenterBottom;
     [self.view addSubview:pageScrollView];
     
     
-
+    
     
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
     _tableview.delegate = self;
@@ -147,11 +150,17 @@ PagedImageScrollView *pageScrollView ;
     
     
     [self.verInfo setAction:@selector(mostrarInfoTradingRisk)];
-    [self.verInfo setTarget:self]; 
+    [self.verInfo setTarget:self];
     
     
-    self.toolbar.delegate = self ; 
-  
+    
+    
+    CGRect bot_frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, [[UIScreen mainScreen] bounds].size.width, 44);
+    self.toolbar.delegate = self ;
+    self.toolbar.frame = bot_frame ;
+    [self.toolbar setBackgroundColor:[UIColor blackColor]];
+    
+    
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     
@@ -166,6 +175,9 @@ PagedImageScrollView *pageScrollView ;
      *  timer que escogen los hud de loading en eventos de carga
      */
     NSTimer *aTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(acciones) userInfo:nil repeats:YES];
+    
+    
+    
     
     
     [self cargarSlider ];
@@ -211,14 +223,14 @@ PagedImageScrollView *pageScrollView ;
     }];
     
     
-//    _products = nil;
-    
-
+    //    _products = nil;
     
     
     
     
-     
+    
+    
+    
     
     [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
         if (success) {
@@ -289,7 +301,7 @@ PagedImageScrollView *pageScrollView ;
     NSLog(@"configurando la celda de indice %d" , indexPath.row );
     
     SKProduct * product = (SKProduct *) _products[ indexPath.row ];
-
+    
     // border redondeados especificados mediante codigo
     [view.layer setCornerRadius:5.0f];
     [view.layer setMasksToBounds:YES];
@@ -331,7 +343,7 @@ PagedImageScrollView *pageScrollView ;
             [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
             [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
             
-                        NSLog(@"  revista %@ , comprada y no  descargada " ,  titulo.text );
+            NSLog(@"  revista %@ , comprada y no  descargada " ,  titulo.text );
         }
         
     } else {
@@ -394,17 +406,17 @@ PagedImageScrollView *pageScrollView ;
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-
+    
     
     
     if (![[segue identifier] isEqualToString:@"mostrarInfo"])
     {
         
-    DescargarViewController *vc = [segue destinationViewController];
-    
-    [vc setTitulo:  titulo_selected ];
-    [vc setRuta_descarga:url_selected];
-    [vc setRuta_portada: url_portada_selected ];
+        DescargarViewController *vc = [segue destinationViewController];
+        
+        [vc setTitulo:  titulo_selected ];
+        [vc setRuta_descarga:url_selected];
+        [vc setRuta_portada: url_portada_selected ];
     }
 }
 
@@ -445,7 +457,7 @@ PagedImageScrollView *pageScrollView ;
 
 
 -(void) leerRevista:(id)sender {
-
+    
     
     UITableViewCell *clickedCell = (UITableViewCell *)[[[[sender superview] superview] superview ]  superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
@@ -456,7 +468,6 @@ PagedImageScrollView *pageScrollView ;
     
     NSString* theFileName = [[NSFileManager defaultManager] displayNameAtPath:ruta ] ;
     
-
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
     
@@ -471,9 +482,9 @@ PagedImageScrollView *pageScrollView ;
 	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
     
 	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:phrase];
-
     
-//	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil];
+    
+    //	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil];
     
 	if (document != nil)
 	{
@@ -488,8 +499,8 @@ PagedImageScrollView *pageScrollView ;
         
 	}
     
-
-
+    
+    
 }
 
 
@@ -512,16 +523,36 @@ PagedImageScrollView *pageScrollView ;
     NSString* ruta = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
     
     
-//    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
-//    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
-//    
+    
+    
+    
+    NSString* theFileName = [[NSFileManager defaultManager] displayNameAtPath:ruta ] ;
+    
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
+    
+    BOOL existe =   [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+    if (existe) {
+        NSLog(@"archivo si existe en descarga");
+        return;
+    }
+    
+    
+    
+    //    NSDictionary* revista = [ _revistas objectAtIndex: [ clickedButtonIndexPath row  ] ];
+    //    NSURL *URL = [NSURL URLWithString: [revista  objectForKey:@"url_descarga" ]   ];
+    //
     NSURL *URL = [NSURL URLWithString: ruta   ];
     
     SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
     
     
     NSDictionary* data = [  revistas_data objectAtIndex: clickedButtonIndexPath.row  ];
-    url_selected = [ NSString stringWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga" ]  ];
+    
+    //url_selected = [ NSString stringWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga" ]  ];
+    url_selected = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
+    
+    
     NSLog(@" url descarga revista %@" , url_selected );
     
     url_selected = ruta ;
@@ -533,7 +564,10 @@ PagedImageScrollView *pageScrollView ;
     
     
     titulo_selected = product.localizedTitle;
-//    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
+    //    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
+    
+    
+    
     
     
     [self performSegueWithIdentifier:@"descarga" sender:self ];
@@ -547,7 +581,7 @@ PagedImageScrollView *pageScrollView ;
 -(void) acciones{
     
     
-
+    
     NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
     NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
     NSString* recargar = [ defaults objectForKey:@"recargar" ];
@@ -561,9 +595,9 @@ PagedImageScrollView *pageScrollView ;
     
     if (recargar != nil) {
         
-//        [self reload];
+        //        [self reload];
         [self.tableview reloadData];
-
+        
         [ defaults setObject:nil forKey:@"recargar"];
         [defaults synchronize ];
     }
@@ -591,16 +625,17 @@ PagedImageScrollView *pageScrollView ;
 
 
 -(BOOL) verificarDescargaArchivo:(NSString*) ruta_archivo {
-
-//    NSString* theFileName = [[  ruta_archivo   lastPathComponent] stringByDeletingLastPathComponent ];
+    
+    //    NSString* theFileName = [[  ruta_archivo   lastPathComponent] stringByDeletingLastPathComponent ];
     NSString* theFileName = [  ruta_archivo   pathExtension ];
     theFileName = [[NSFileManager defaultManager] displayNameAtPath: ruta_archivo ];
     
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
     
-    return  [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
-
+    BOOL existe = [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+    return existe;
+    
 }
 
 
@@ -626,15 +661,25 @@ PagedImageScrollView *pageScrollView ;
 
 
 -(IBAction)mostrarInfo:(id)sender{
-
+    
     [self performSegueWithIdentifier:@"mostrarInfo" sender:self];
-
+    
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-
+    
     NSLog(@"test");
 }
+
+
+- (void)cambiarSlider{
+    
+    [pageScrollView cambiarPagina ];
+    
+    NSLog(@"cambiar slider ejecutado");
+}
+
+
 
 
 @end
