@@ -18,6 +18,51 @@
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
     
+    
+    
+    if ( [(NSString*)[UIDevice currentDevice].model hasPrefix:@"iPad"] ) {
+
+        UIStoryboard *storyBoard;
+        
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        CGFloat scale = [UIScreen mainScreen].scale;
+        result = CGSizeMake(result.width * scale, result.height * scale);
+        storyBoard = [UIStoryboard storyboardWithName:@"Storyboard_ipad" bundle:nil];
+        UIViewController *initViewController = [storyBoard instantiateInitialViewController];
+        [self.window setRootViewController:initViewController];
+    }else{
+        UIStoryboard *storyBoard;
+        
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        CGFloat scale = [UIScreen mainScreen].scale;
+        result = CGSizeMake(result.width * scale, result.height * scale);
+        storyBoard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+        UIViewController *initViewController = [storyBoard instantiateInitialViewController];
+        [self.window setRootViewController:initViewController];
+    }
+    
+    
+    
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        UIStoryboard *storyBoard;
+        
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        CGFloat scale = [UIScreen mainScreen].scale;
+        result = CGSizeMake(result.width * scale, result.height * scale);
+        
+        if(result.width  == 1136){
+            storyBoard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone_5" bundle:nil];
+            UIViewController *initViewController = [storyBoard instantiateInitialViewController];
+            [self.window setRootViewController:initViewController];
+        }
+    }
+
+    
+    
+    
+    
+    
     [TradingRiskIAPHelper sharedInstance];
 
     return YES;

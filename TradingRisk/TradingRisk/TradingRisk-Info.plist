@@ -26,6 +26,8 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMainNibFile~ipad</key>
+	<string>Storyboard-iPad</string>
 	<key>UILaunchImageFile</key>
 	<string>splash</string>
 	<key>UILaunchImages</key>

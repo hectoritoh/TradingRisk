@@ -154,6 +154,11 @@ PagedImageScrollView *pageScrollView ;
     
     
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
+    
+    
+    self.view.frame = CGRectMake(0, 0 , [[UIScreen mainScreen] bounds].size.width, 44);
+    _tableview.frame = CGRectMake(0, 0 , [[UIScreen mainScreen] bounds].size.width, 44);
+    
     _tableview.delegate = self;
     _tableview.dataSource = self;
     
@@ -296,6 +301,13 @@ PagedImageScrollView *pageScrollView ;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenBound.size;
+    CGFloat screenWidth = screenSize.width;
+    CGFloat screenHeight = screenSize.height;
+    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     

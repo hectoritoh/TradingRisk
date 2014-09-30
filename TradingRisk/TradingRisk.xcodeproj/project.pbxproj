@@ -74,6 +74,7 @@
 		C44E29AD19C2006100DAA103 /* LaunchImageRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */; };
 		C44E29AF19C20FBD00DAA103 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = C44E29AE19C20FBD00DAA103 /* banner.png */; };
 		C468C4AC19D4BFE700897764 /* logotipo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C468C4AB19D4BFE700897764 /* logotipo.jpg */; };
+		C46B876319DAF882009BBDB7 /* Storyboard_ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C46B876219DAF882009BBDB7 /* Storyboard_ipad.storyboard */; };
 		C4AAE76C19BE31BD006C1458 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75A19BE31BD006C1458 /* AFHTTPRequestOperation.m */; };
 		C4AAE76D19BE31BD006C1458 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75C19BE31BD006C1458 /* AFHTTPRequestOperationManager.m */; };
 		C4AAE76E19BE31BD006C1458 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AAE75E19BE31BD006C1458 /* AFHTTPSessionManager.m */; };
@@ -211,6 +212,7 @@
 		C44E29AC19C2006100DAA103 /* LaunchImageRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImageRetina.png; sourceTree = "<group>"; };
 		C44E29AE19C20FBD00DAA103 /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = banner.png; sourceTree = "<group>"; };
 		C468C4AB19D4BFE700897764 /* logotipo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = logotipo.jpg; sourceTree = "<group>"; };
+		C46B876219DAF882009BBDB7 /* Storyboard_ipad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_ipad.storyboard; sourceTree = "<group>"; };
 		C4AAE75919BE31BD006C1458 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		C4AAE75A19BE31BD006C1458 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		C4AAE75B19BE31BD006C1458 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		C43BD62E19B4C5630038714B = {
 			isa = PBXGroup;
 			children = (
+				C46B876219DAF882009BBDB7 /* Storyboard_ipad.storyboard */,
 				C43BD66919B4C5AA0038714B /* Storyboard.storyboard */,
 				C43BD64019B4C5630038714B /* TradingRisk */,
 				C43BD65919B4C5630038714B /* TradingRiskTests */,
@@ -422,6 +425,7 @@
 		C43BD64019B4C5630038714B /* TradingRisk */ = {
 			isa = PBXGroup;
 			children = (
+				C46B876119DAF5F2009BBDB7 /* iPad */,
 				C4C6D6C819D201E700AB194D /* Classes */,
 				C404062219B75E1C00B109DC /* Magazines */,
 				C43BD6C919B65E4D0038714B /* Assets */,
@@ -545,6 +549,13 @@
 				C43BD6CA19B65E560038714B /* banner.jpg */,
 			);
 			name = Assets;
+			sourceTree = "<group>";
+		};
+		C46B876119DAF5F2009BBDB7 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 		C4AAE75819BE31BD006C1458 /* AFNetworking */ = {
@@ -693,6 +704,7 @@
 				C404067719B75FB300B109DC /* Reader-Mark-N@2x.png in Resources */,
 				C43BD6D019B676B10038714B /* magazine.jpg in Resources */,
 				C4B953F419C7827300485B55 /* banner4.jpg in Resources */,
+				C46B876319DAF882009BBDB7 /* Storyboard_ipad.storyboard in Resources */,
 				C4FD4B5319C355EC00CD2F23 /* descargar.png in Resources */,
 				C43BD64519B4C5630038714B /* InfoPlist.strings in Resources */,
 				C404067D19B75FB300B109DC /* Reader-Thumbs@2x.png in Resources */,
@@ -904,7 +916,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
 				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -917,7 +931,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TradingRisk/TradingRisk-Prefix.pch";
 				INFOPLIST_FILE = "TradingRisk/TradingRisk-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -100,7 +100,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" tag="10" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d5O-Gm-11k">
+                            <tableView clipsSubviews="YES" tag="10" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d5O-Gm-11k">
                                 <rect key="frame" x="0.0" y="188" width="320" height="379"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -149,7 +149,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sX-mA-uXF">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3sX-mA-uXF">
                                 <rect key="frame" x="0.0" y="525" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
@@ -167,7 +167,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="d5O-Gm-11k" firstAttribute="width" secondItem="Ze7-fy-hyL" secondAttribute="width" id="ECN-zd-J5s"/>
+                            <constraint firstItem="gmS-UC-4fG" firstAttribute="top" secondItem="3sX-mA-uXF" secondAttribute="bottom" constant="-1" id="LRQ-VZ-GBV"/>
+                            <constraint firstItem="d5O-Gm-11k" firstAttribute="width" secondItem="Ze7-fy-hyL" secondAttribute="width" id="SsC-tg-U3a"/>
                             <constraint firstAttribute="bottom" secondItem="3sX-mA-uXF" secondAttribute="bottom" constant="-1" id="b6Y-7B-TFW"/>
+                            <constraint firstAttribute="width" secondItem="3sX-mA-uXF" secondAttribute="width" id="iit-0b-H2F"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Trading Risk Magazine" id="1Nf-Su-Cf2"/>
