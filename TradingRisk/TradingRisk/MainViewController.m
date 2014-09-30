@@ -131,10 +131,20 @@ PagedImageScrollView *pageScrollView ;
     
     [self.navigationController setTitle:@"Trading Risk"];
     
+    
+    
+    
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenBound.size;
+    CGFloat screenWidth = screenSize.width;
+    CGFloat screenHeight = screenSize.height;
+    
+    
+    
     revistas_data = [[NSMutableArray alloc] init] ;
     
     
-    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, 320, 160)];
+    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 160)];
     [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
     
     pageScrollView.pageControlPos = PageControlPositionCenterBottom;
@@ -155,7 +165,7 @@ PagedImageScrollView *pageScrollView ;
     
     
     
-    CGRect bot_frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, [[UIScreen mainScreen] bounds].size.width, 44);
+    CGRect bot_frame = CGRectMake(0, 0 , [[UIScreen mainScreen] bounds].size.width, 44);
     self.toolbar.delegate = self ;
     self.toolbar.frame = bot_frame ;
     [self.toolbar setBackgroundColor:[UIColor blackColor]];
