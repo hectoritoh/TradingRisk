@@ -47,6 +47,8 @@
 		C404068A19B7626200B109DC /* ReaderBookDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C404068619B7626200B109DC /* ReaderBookDelegate.m */; };
 		C404068B19B7626200B109DC /* ReaderDemoController.m in Sources */ = {isa = PBXBuildFile; fileRef = C404068819B7626200B109DC /* ReaderDemoController.m */; };
 		C404068D19B7644E00B109DC /* Reader.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C404068C19B7644E00B109DC /* Reader.pdf */; };
+		C404589919DDA51700CEEA21 /* RevistaEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = C404589819DDA51700CEEA21 /* RevistaEntity.m */; };
+		C404589C19DDA77B00CEEA21 /* RevistaDB.m in Sources */ = {isa = PBXBuildFile; fileRef = C404589B19DDA77B00CEEA21 /* RevistaDB.m */; };
 		C43BD63B19B4C5630038714B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63A19B4C5630038714B /* Foundation.framework */; };
 		C43BD63D19B4C5630038714B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63C19B4C5630038714B /* CoreGraphics.framework */; };
 		C43BD63F19B4C5630038714B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43BD63E19B4C5630038714B /* UIKit.framework */; };
@@ -96,6 +98,8 @@
 		C4CD850C19D0B78A00746D7B /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850219D0B78A00746D7B /* UIProgressView+AFNetworking.m */; };
 		C4CD850D19D0B78A00746D7B /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850419D0B78A00746D7B /* UIRefreshControl+AFNetworking.m */; };
 		C4CD850E19D0B78A00746D7B /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CD850619D0B78A00746D7B /* UIWebView+AFNetworking.m */; };
+		C4DE21B919E2DD1B00247D4F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C4DE21B819E2DD1B00247D4F /* libsqlite3.dylib */; };
+		C4F7AAC319E3B67200FD9E71 /* revistas.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = C4F7AAC219E3B67200FD9E71 /* revistas.sqlite3 */; };
 		C4F86AE319D9C1D60078AE60 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F86AE219D9C1D60078AE60 /* AboutViewController.m */; };
 		C4FD4B5319C355EC00CD2F23 /* descargar.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5119C355EC00CD2F23 /* descargar.png */; };
 		C4FD4B5419C355EC00CD2F23 /* read.png in Resources */ = {isa = PBXBuildFile; fileRef = C4FD4B5219C355EC00CD2F23 /* read.png */; };
@@ -175,6 +179,10 @@
 		C404068719B7626200B109DC /* ReaderDemoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderDemoController.h; sourceTree = "<group>"; };
 		C404068819B7626200B109DC /* ReaderDemoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderDemoController.m; sourceTree = "<group>"; };
 		C404068C19B7644E00B109DC /* Reader.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Reader.pdf; sourceTree = "<group>"; };
+		C404589719DDA51700CEEA21 /* RevistaEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevistaEntity.h; sourceTree = "<group>"; };
+		C404589819DDA51700CEEA21 /* RevistaEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevistaEntity.m; sourceTree = "<group>"; };
+		C404589A19DDA77B00CEEA21 /* RevistaDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevistaDB.h; sourceTree = "<group>"; };
+		C404589B19DDA77B00CEEA21 /* RevistaDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevistaDB.m; sourceTree = "<group>"; };
 		C43BD63719B4C5630038714B /* TradingRisk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradingRisk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43BD63A19B4C5630038714B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C43BD63C19B4C5630038714B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -254,6 +262,8 @@
 		C4CD850419D0B78A00746D7B /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		C4CD850519D0B78A00746D7B /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		C4CD850619D0B78A00746D7B /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		C4DE21B819E2DD1B00247D4F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C4F7AAC219E3B67200FD9E71 /* revistas.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = revistas.sqlite3; sourceTree = "<group>"; };
 		C4F86AE119D9C1D60078AE60 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		C4F86AE219D9C1D60078AE60 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		C4FD4B5119C355EC00CD2F23 /* descargar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = descargar.png; sourceTree = "<group>"; };
@@ -265,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4DE21B919E2DD1B00247D4F /* libsqlite3.dylib in Frameworks */,
 				C404068119B7611100B109DC /* ImageIO.framework in Frameworks */,
 				C404067F19B7610600B109DC /* MessageUI.framework in Frameworks */,
 				C43BD6C819B65C330038714B /* QuartzCore.framework in Frameworks */,
@@ -410,6 +421,7 @@
 		C43BD63919B4C5630038714B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4DE21B819E2DD1B00247D4F /* libsqlite3.dylib */,
 				C404068019B7611100B109DC /* ImageIO.framework */,
 				C404067E19B7610600B109DC /* MessageUI.framework */,
 				C43BD6C719B65C330038714B /* QuartzCore.framework */,
@@ -536,6 +548,7 @@
 		C43BD6C919B65E4D0038714B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				C4F7AAC119E3B67200FD9E71 /* basedatos */,
 				C44E29AE19C20FBD00DAA103 /* banner.png */,
 				C4B953EF19C7827300485B55 /* banner2.jpg */,
 				C468C4AB19D4BFE700897764 /* logotipo.jpg */,
@@ -596,6 +609,10 @@
 		C4C6D6C819D201E700AB194D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C404589719DDA51700CEEA21 /* RevistaEntity.h */,
+				C404589819DDA51700CEEA21 /* RevistaEntity.m */,
+				C404589A19DDA77B00CEEA21 /* RevistaDB.h */,
+				C404589B19DDA77B00CEEA21 /* RevistaDB.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -622,6 +639,14 @@
 				C4CD850619D0B78A00746D7B /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		C4F7AAC119E3B67200FD9E71 /* basedatos */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7AAC219E3B67200FD9E71 /* revistas.sqlite3 */,
+			);
+			path = basedatos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -712,6 +737,7 @@
 				C404067319B75FB300B109DC /* Reader-Button-N@2x.png in Resources */,
 				C43BD64D19B4C5630038714B /* Images.xcassets in Resources */,
 				C404067919B75FB300B109DC /* Reader-Mark-Y@2x.png in Resources */,
+				C4F7AAC319E3B67200FD9E71 /* revistas.sqlite3 in Resources */,
 				C468C4AC19D4BFE700897764 /* logotipo.jpg in Resources */,
 				C404067019B75FB300B109DC /* Reader-Button-H.png in Resources */,
 				C404067B19B75FB300B109DC /* Reader-Print@2x.png in Resources */,
@@ -769,6 +795,7 @@
 				C43BD64B19B4C5630038714B /* AppDelegate.m in Sources */,
 				C404064E19B75F8B00B109DC /* ReaderConstants.m in Sources */,
 				C4448BC119C8EA5000316B58 /* DescargarViewController.m in Sources */,
+				C404589C19DDA77B00CEEA21 /* RevistaDB.m in Sources */,
 				C4AAE76E19BE31BD006C1458 /* AFHTTPSessionManager.m in Sources */,
 				C43BD67419B4DA7E0038714B /* TradingRiskIAPHelper.m in Sources */,
 				C404066019B75F8B00B109DC /* UIXToolbarView.m in Sources */,
@@ -787,6 +814,7 @@
 				C43BD67019B4D8BE0038714B /* IAPHelper.m in Sources */,
 				C43BD6C619B65C040038714B /* iCarousel.m in Sources */,
 				C4CD850E19D0B78A00746D7B /* UIWebView+AFNetworking.m in Sources */,
+				C404589919DDA51700CEEA21 /* RevistaEntity.m in Sources */,
 				C4CD850819D0B78A00746D7B /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				C404065F19B75F8B00B109DC /* ThumbsViewController.m in Sources */,
 				C43BD64719B4C5630038714B /* main.m in Sources */,

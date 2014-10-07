@@ -7,6 +7,8 @@
 //
 
 #import "TradingRiskIAPHelper.h"
+#import "RevistaDB.h"
+#import "RevistaEntity.h"
 
 @implementation TradingRiskIAPHelper
 
@@ -19,31 +21,32 @@
         
         
         
-        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults ];
         
 
-        
-        if (  [defaults objectForKey:@"productos" ] == NULL ) {
+       NSArray* revista =  [[RevistaDB  database ] getRevistas  ];
 
-            NSSet * productIdentifiers = [NSSet setWithObjects:
-                                          @"tradingrisk01",
-                                          @"desa.celmedia.TradingRisk.tradingrisk02",
-                                          @"mi.revista.3" ,
-                                          @"mi.revista.4" ,
-                                          nil];
-            
+        NSMutableArray* productos_id = [[ NSMutableArray alloc ] init ] ;
+        
+        for (RevistaEntity* object in revista ) {
+            [  productos_id addObject:   [  object codigo_iphone ] ];
+            NSLog(@"desde base registro encontrado: %@" ,   [  object codigo_iphone ] );
+        }
+        
+        NSSet *productIdentifiers = [NSSet setWithArray: productos_id ];
+
+//        [productIdentifiers setByAddingObjectsFromArray:productos_id];
+        
+
+//            NSSet * productIdentifiers = [NSSet setWithObjects:
+//                                          @"tradingrisk01",
+//                                          @"desa.celmedia.TradingRisk.tradingrisk02",
+//                                          @"mi.revista.3" ,
+//                                          @"mi.revista.4" ,
+//                                          nil];
+        
             
             sharedInstance = [[self alloc] initWithProductIdentifiers: productIdentifiers  ];
             
-            
-        }else{
-        
-            sharedInstance = [[self alloc] initWithProductIdentifiers: [defaults objectForKey:@"productos" ]  ];
-            
-            
-        }
-
-        
         
         
     });

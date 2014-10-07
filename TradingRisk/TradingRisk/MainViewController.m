@@ -9,15 +9,17 @@
 #import "TradingRiskIAPHelper.h"
 #import <StoreKit/StoreKit.h>
 #import <QuartzCore/QuartzCore.h>
-
 #import "ReaderBookDelegate.h"
 #import "ReaderViewController.h"
-
 #import "AFNetworking/AFNetworking.h"
 #import "PagedImageScrollView.h"
-
 #import "DescargarViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "RevistaDB.h"
+#import "RevistaEntity.h"
+
+
+
 
 
 @interface MainViewController () <ReaderViewControllerDelegate>
@@ -34,6 +36,7 @@ NSMutableArray *  slider_images;
 NSString* titulo_selected ;
 
 NSMutableArray *  revistas_data;
+NSArray *  revistas_data_db;
 
 
 
@@ -88,7 +91,6 @@ PagedImageScrollView *pageScrollView ;
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             
             //// respuesta de la version de los slider
-            NSString * version = [  responseObject objectForKey:@"version" ];
             
             NSDictionary* data_banners =  [self indexKeyedDictionaryFromArray: [responseObject objectForKey:@"banner" ]  ] ;
             
@@ -113,14 +115,11 @@ PagedImageScrollView *pageScrollView ;
             [pageScrollView setScrollViewContentsImageViews: imagenes  andUrls: url_banners  ];
             
             NSTimer *aTimerSlider = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(cambiarSlider) userInfo:nil repeats:YES];
-            
-            
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", [error description ]);
     }];
-    
     
 }
 
@@ -132,35 +131,39 @@ PagedImageScrollView *pageScrollView ;
     [self.navigationController setTitle:@"Trading Risk"];
     
     
-    
-    
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGSize screenSize = screenBound.size;
     CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
-    
-    
-    
+
     revistas_data = [[NSMutableArray alloc] init] ;
     
     
-    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 160)];
+    /**
+     Configuracion de slider
+     */
+    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 170)];
     [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
     
     pageScrollView.pageControlPos = PageControlPositionCenterBottom;
     [self.view addSubview:pageScrollView];
     
     
+    /**
+     Configuracion de tabla
+     */
     
     
     _tableview = (UITableView*) [ self.view viewWithTag:10 ];
     
-    
     self.view.frame = CGRectMake(0, 0 , [[UIScreen mainScreen] bounds].size.width, 44);
     _tableview.frame = CGRectMake(0, 0 , [[UIScreen mainScreen] bounds].size.width, 44);
     
+    _tableview.contentInset = UIEdgeInsetsMake(0, 0, 90, 0);
+    
     _tableview.delegate = self;
     _tableview.dataSource = self;
+    
+    
     
     
     
@@ -178,6 +181,7 @@ PagedImageScrollView *pageScrollView ;
     
     
     self.refreshControl = [[UIRefreshControl alloc] init];
+//    [self.refreshControl setBackgroundColor:[UIColor colorWithRed:164/255 green:164/255 blue:164/255 alpha:1.000]];
     
     [self.refreshControl addTarget:self action:@selector(reload) forControlEvents:UIControlEventValueChanged];
     [_tableview addSubview:self.refreshControl];
@@ -202,7 +206,6 @@ PagedImageScrollView *pageScrollView ;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -228,9 +231,53 @@ PagedImageScrollView *pageScrollView ;
         
         NSLog(@"class %@ " , [responseObject class ]  );
         
+        NSString* version =  [responseObject objectForKey:@"version"];
+        NSString* version_actual = [[  RevistaDB database] getVersion];
+        
+        
+        if ([version isEqualToString:version_actual]) {
+            revistas_data_db = [[  RevistaDB database] getRevistas];
+        }else{
+        
+        [[  RevistaDB database] actualizarVersion: version];
         revistas_data = [responseObject objectForKey:@"revistas"];
         
         NSLog(@"data de la revista %@ ", revistas_data);
+        
+        
+        for (id object_data in revistas_data ) {
+            [[RevistaDB database]  grabarRevista:object_data  ];
+            }
+        }
+        
+                    revistas_data_db = [[  RevistaDB database] getRevistas];
+        
+        [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
+            if (success) {
+                _products = products;
+                [_tableview reloadData];
+                [self.hud hide:YES ];
+                
+                [self.tableview reloadData];
+            }else{
+                
+                
+                [self.hud hide:YES];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Error de conexion"
+                                                               message: @"Problemas al cargar items"
+                                                              delegate: self
+                                                     cancelButtonTitle:@"Reintentar"
+                                                     otherButtonTitles:nil,nil];
+                
+                
+                [alert show];
+                
+                [self.tableview reloadData];
+                
+            }
+            [self.refreshControl endRefreshing];
+        }];
+        
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -247,31 +294,7 @@ PagedImageScrollView *pageScrollView ;
     
     
     
-    [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
-        if (success) {
-            _products = products;
-            [_tableview reloadData];
-            [self.hud hide:YES ];
-            
-            [self.tableview reloadData];
-        }else{
-            
-            
-            [self.hud hide:YES];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Error de conexion"
-                                                           message: @"Problemas al cargar items"
-                                                          delegate: self
-                                                 cancelButtonTitle:@"Reintentar"
-                                                 otherButtonTitles:nil,nil];
-            
-            
-            [alert show];
-            
-            [self.tableview reloadData];
-            
-        }
-        [self.refreshControl endRefreshing];
-    }];
+   
 }
 
 
@@ -287,13 +310,20 @@ PagedImageScrollView *pageScrollView ;
 {
     
     // Return the number of rows in the section.
-    return revistas_data.count;
+//    return revistas_data.count;
+//    return _products.count;
+    return revistas_data_db.count; 
+    
 }
 
-
+//
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+
+    if (revistas_data_db.count == (NSUInteger)indexPath.row) {
+
+        return 150;
+    }
     
     return 90.0;
 }
@@ -301,13 +331,6 @@ PagedImageScrollView *pageScrollView ;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    CGSize screenSize = screenBound.size;
-    CGFloat screenWidth = screenSize.width;
-    CGFloat screenHeight = screenSize.height;
-    
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
@@ -322,7 +345,7 @@ PagedImageScrollView *pageScrollView ;
     NSLog(@"configuracion de celdas");
     NSLog(@"configurando la celda de indice %d" , indexPath.row );
     
-    SKProduct * product = (SKProduct *) _products[ indexPath.row ];
+
     
     // border redondeados especificados mediante codigo
     [view.layer setCornerRadius:5.0f];
@@ -330,14 +353,20 @@ PagedImageScrollView *pageScrollView ;
     [view.layer setBorderWidth:0.5f];
     
     
-    NSDictionary * data = revistas_data[  indexPath.row  ] ;
+    RevistaEntity * data = revistas_data_db[  indexPath.row  ] ;
     
     
     // seteo del titulo
-    titulo.text = [ data objectForKey:@"nombre" ] ;
+    titulo.text = [ data nombre ] ;
     
     // seteo del precio
-    precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
+    
+//    SKProduct * product = (SKProduct *) _products[ indexPath.row ];
+    
+    
+//    precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
+    precio.text = @"";
+    
     
     // url de la portada
     NSString* url_portada = [self getRutaDescargaDe:@"portada" delIndice:indexPath.row];
@@ -349,7 +378,13 @@ PagedImageScrollView *pageScrollView ;
     
     // verifica si el producto ha sido comprado
     
-    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+  
+    
+    
+    
+    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:[data codigo_iphone ]  ]) {
+//    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
+        
         
         
         
@@ -413,6 +448,8 @@ PagedImageScrollView *pageScrollView ;
     NSLog(@"  indice %ld" , (long)[clickedButtonIndexPath row ] );
     
     UIButton *buyButton = (UIButton *)sender;
+
+//    SKProduct *product = _products[ clickedButtonIndexPath.row  ];
     SKProduct *product = _products[ clickedButtonIndexPath.row  ];
     
     NSLog(@"Buying %@...", product.productIdentifier);
@@ -665,16 +702,35 @@ PagedImageScrollView *pageScrollView ;
 
 -(NSString*) getRutaDescargaDe:(NSString*) tipo_de_ruta delIndice:(NSUInteger) indice{
     
-    NSDictionary* data = [revistas_data objectAtIndex:indice] ;
+    RevistaEntity* data = [revistas_data_db objectAtIndex:indice] ;
     NSString* url = @"";
     
     if ([tipo_de_ruta isEqualToString:@"portada"]) {
-        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada"] ];
+        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_portada , [data  url_portada ] ];
     }
     
     if ([tipo_de_ruta isEqualToString:@"revista"]) {
-        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga"] ];
+        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_revista , [data url_descarga ] ];
     }
+    
+    
+//    NSDictionary* data = [revistas_data objectAtIndex:indice] ;
+//    NSString* url = @"";
+//    
+//    if ([tipo_de_ruta isEqualToString:@"portada"]) {
+//        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada"] ];
+//    }
+//    
+//    if ([tipo_de_ruta isEqualToString:@"revista"]) {
+//        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga"] ];
+//    }
+    
+    
+    
+    
+    
+    
+    
     
     return url ;
     
