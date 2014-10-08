@@ -220,9 +220,6 @@ static RevistaDB *_database;
     
     query =  [NSString stringWithFormat:@" insert into version values('%@')" ,  version  ];
     
-    
-
-    
     NSLog(@" query a ejecutar  %@",query);
     const char *insert_stmt = [query UTF8String];
     sqlite3_prepare_v2(_database, insert_stmt, -1, &statement, NULL);
@@ -237,6 +234,37 @@ static RevistaDB *_database;
         NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
     }
      success=sqlite3_step(statement);
+    
+    if (success == SQLITE_ERROR)
+    {
+        NSAssert1(0, @"Error: failed to insert into the database with message '%s'.", sqlite3_errmsg(_database));
+    }        sqlite3_finalize(statement);
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    query =  [NSString stringWithFormat:@" delete from revistas "   ];
+    
+    NSLog(@" query a ejecutar  %@",query);
+    insert_stmt = [query UTF8String];
+    sqlite3_prepare_v2(_database, insert_stmt, -1, &statement, NULL);
+    
+    if(sqlite3_step(statement)==SQLITE_DONE)
+    {
+        NSLog(@"insertar version correcta ");
+    }
+    else
+    {
+        NSLog(@"error insertar version ");
+        NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
+    }
+    success=sqlite3_step(statement);
     
     if (success == SQLITE_ERROR)
     {

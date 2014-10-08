@@ -29,9 +29,9 @@
 @implementation MainViewController
 
 
-NSArray *_products;
-NSMutableArray *_revistas;
-NSMutableArray *  slider_images;
+NSArray        * _products;
+NSMutableArray * _revistas;
+NSMutableArray * slider_images;
 
 NSString* titulo_selected ;
 
@@ -141,7 +141,7 @@ PagedImageScrollView *pageScrollView ;
     /**
      Configuracion de slider
      */
-    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 170)];
+    pageScrollView = [[PagedImageScrollView alloc] initWithFrame:CGRectMake(0, 10, screenWidth, 150)];
     [pageScrollView setScrollViewContents:@[[UIImage imageNamed:@"banner.png"] ]];
     
     pageScrollView.pageControlPos = PageControlPositionCenterBottom;
@@ -162,8 +162,6 @@ PagedImageScrollView *pageScrollView ;
     
     _tableview.delegate = self;
     _tableview.dataSource = self;
-    
-    
     
     
     
@@ -227,9 +225,9 @@ PagedImageScrollView *pageScrollView ;
     
     NSDictionary *parameters = @{@"user": @"trading"  , @"pass": @"riskclave"  , @"metodo": @"revista"  };
     [manager POST:  url_servicio  parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
+
         
-        NSLog(@"class %@ " , [responseObject class ]  );
+        NSLog(@"JSON: %@", responseObject);
         
         NSString* version =  [responseObject objectForKey:@"version"];
         NSString* version_actual = [[  RevistaDB database] getVersion];
@@ -250,7 +248,7 @@ PagedImageScrollView *pageScrollView ;
             }
         }
         
-                    revistas_data_db = [[  RevistaDB database] getRevistas];
+        revistas_data_db = [[  RevistaDB database] getRevistas];
         
         [[TradingRiskIAPHelper sharedInstance] requestProductsWithCompletionHandler:^(BOOL success, NSArray *products) {
             if (success) {
@@ -285,17 +283,11 @@ PagedImageScrollView *pageScrollView ;
     }];
     
     
-    //    _products = nil;
-    
-    
-    
-    
-    
-    
-    
-    
-   
 }
+
+
+
+
 
 
 #pragma mark - Table view data source
@@ -306,23 +298,28 @@ PagedImageScrollView *pageScrollView ;
     return 1;
 }
 
+
+
+
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    // Return the number of rows in the section.
-//    return revistas_data.count;
-//    return _products.count;
-    return revistas_data_db.count; 
-    
+    return revistas_data_db.count;
 }
+
+
+
+
+
+
 
 //
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
     if (revistas_data_db.count == (NSUInteger)indexPath.row) {
-
-        return 150;
+        return 180;
     }
     
     return 90.0;
@@ -334,18 +331,11 @@ PagedImageScrollView *pageScrollView ;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    UIView* view = (UIView *) [cell viewWithTag:123 ];
-    UILabel* titulo = (UILabel *) [cell viewWithTag:10 ];
-    UILabel* precio = (UILabel*) [  cell viewWithTag:20];
-    UIImageView* img_portada = (UIImageView*)[  cell viewWithTag:300 ];
-    
-    UIButton* accion = (UIButton*) [ cell viewWithTag:30 ];
-    
-    
-    NSLog(@"configuracion de celdas");
-    NSLog(@"configurando la celda de indice %d" , indexPath.row );
-    
-
+    UIView* view             = (UIView *)       [cell viewWithTag:123 ];
+    UILabel* titulo          = (UILabel *)      [cell viewWithTag:10  ];
+    UILabel* precio          = (UILabel *)      [cell viewWithTag:20  ];
+    UIImageView* img_portada = (UIImageView *)  [cell viewWithTag:300 ];
+    UIButton* accion         = (UIButton*)      [cell viewWithTag:30  ];
     
     // border redondeados especificados mediante codigo
     [view.layer setCornerRadius:5.0f];
@@ -359,102 +349,113 @@ PagedImageScrollView *pageScrollView ;
     // seteo del titulo
     titulo.text = [ data nombre ] ;
     
-    // seteo del precio
-    
-//    SKProduct * product = (SKProduct *) _products[ indexPath.row ];
-    
-    
-//    precio.text = [ NSString stringWithFormat:@"$%@" , product.price];
-    precio.text = @"";
-    
-    
     // url de la portada
     NSString* url_portada = [self getRutaDescargaDe:@"portada" delIndice:indexPath.row];
     [img_portada setImageWithURL:[NSURL URLWithString: url_portada  ]];
     
+    
     // url de la descarga
-    NSString* url_revista_descarga = [self   getRutaDescargaDe:@"revista" delIndice:indexPath.row];
+
+   
     
+
+    NSLog(@"configurando la celda de indice %d  de codigo %@ " , indexPath.row , [data codigo_iphone] );
     
-    // verifica si el producto ha sido comprado
+
     
-  
-    
-    
-    
-    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:[data codigo_iphone ]  ]) {
-//    if ([[TradingRiskIAPHelper sharedInstance] productPurchased:product.productIdentifier]) {
-        
-        
-        
-        
-        if ([self verificarDescargaArchivo:url_revista_descarga]) {
-            
-            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
-            [accion addTarget:self action:@selector(leerRevista:) forControlEvents:UIControlEventTouchUpInside];
-            
-            NSLog(@"  revista %@ , comprada y descargada " ,  titulo.text );
-            
-        }else{
-            /// DESCARGA DE ARCHIVO
-            [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
-            [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
-            
-            NSLog(@"  revista %@ , comprada y no  descargada " ,  titulo.text );
-        }
-        
-    } else {
-        
-        NSLog(@"  revista %@ , no comprada " ,  titulo.text );
-        //// opcion de compra
-        [accion addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-    }
-    
+
     return cell;
 }
 
 
 
+-(IBAction)accionProducto:(id)sender{
 
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
     
-    [cell.contentView.layer setCornerRadius:7.0f];
-    [cell.contentView.layer setMasksToBounds:YES];
+    UIButton *accion = (UIButton *)sender;
+    
+    UITableViewCell *cell = (UITableViewCell *)accion.superview.superview.superview.superview;
+    UITableView *tableView = (UITableView *)cell.superview.superview;
+    NSIndexPath *clickedButtonIndexPath = [tableView indexPathForCell:cell];
+    
+    RevistaEntity* data = [revistas_data_db objectAtIndex:  clickedButtonIndexPath.row ];
+    SKProduct* producto = [self getProductoPorCodigo:[data codigo_iphone]];
+    
+    NSString* url_revista_descarga = [self   getRutaDescargaDe:@"revista" delIndice:clickedButtonIndexPath.row];
+    
+    if (producto == NULL ) {
+        
+        [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+        [self productoNoDisponible:accion  ];
+        
+        [accion addTarget:self action:@selector(productoNoDisponible:) forControlEvents:UIControlEventTouchUpInside];
+        
+//        precio.text = @"";
+        
+    }else{
+        
+//        precio.text = [ NSString stringWithFormat:@"$%@" , producto.price];
+        
+        if ([[TradingRiskIAPHelper sharedInstance] productPurchased:producto.productIdentifier  ]) {
+            
+            
+            if ([self verificarDescargaArchivo:url_revista_descarga]) {
+                
+                [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+                [self leerRevista:accion];
+//                [accion addTarget:self action:@selector(leerRevista:) forControlEvents:UIControlEventTouchUpInside];
+                
+//                NSLog(@"  revista %@ , comprada y descargada " ,  titulo.text );
+                
+            }else{
+                /// DESCARGA DE ARCHIVO
+                [accion setImage:[ UIImage imageNamed:@"read.png" ] forState:UIControlStateNormal];
+                [accion addTarget:self action:@selector(descargar:) forControlEvents:UIControlEventTouchUpInside];
+                [self descargar:accion];
+                
+//                NSLog(@"  revista %@ , comprada y no  descargada " ,  titulo.text );
+            }
+            
+        } else {
+            
+//            NSLog(@"  revista %@ , no comprada " ,  titulo.text );
+            [self buyButtonTapped:accion ];
+            //// opcion de compra
+//            [accion addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+    }
+
+
+
 }
 
 
 
 - (void)buyButtonTapped:(id)sender {
     
-    
-    
-    
-    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    self.hud.mode = MBProgressHUDModeIndeterminate;
-    self.hud.labelText = @"Realizando transacción";
-    self.hud.dimBackground = YES;
-    
-    
     UIButton *button = (UIButton *)sender;
     
     UITableViewCell *cell = (UITableViewCell *)button.superview.superview.superview.superview;
     UITableView *tableView = (UITableView *)cell.superview.superview;
     NSIndexPath *clickedButtonIndexPath = [tableView indexPathForCell:cell];
-    
-    
-    NSLog(@"  indice %ld" , (long)[clickedButtonIndexPath row ] );
-    
-    UIButton *buyButton = (UIButton *)sender;
 
-//    SKProduct *product = _products[ clickedButtonIndexPath.row  ];
-    SKProduct *product = _products[ clickedButtonIndexPath.row  ];
+
+    RevistaEntity* revista = [revistas_data_db objectAtIndex:  clickedButtonIndexPath.row  ];
+    SKProduct *product =[self getProductoPorCodigo:  [revista codigo_iphone ]  ] ;
     
-    NSLog(@"Buying %@...", product.productIdentifier);
-    [[TradingRiskIAPHelper sharedInstance] buyProduct:product];
-    
+    if (product == NULL) {
+        [self productoNoDisponible:nil];
+    }else{
+     
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        self.hud.mode = MBProgressHUDModeIndeterminate;
+        self.hud.labelText = @"Realizando transacción";
+        self.hud.dimBackground = YES;
+        
+        NSLog(@"Buying %@...", product.productIdentifier);
+        [[TradingRiskIAPHelper sharedInstance] buyProduct:product];
+    }
 }
 
 
@@ -465,14 +466,9 @@ PagedImageScrollView *pageScrollView ;
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
-    
-    
     if (![[segue identifier] isEqualToString:@"mostrarInfo"])
     {
-        
         DescargarViewController *vc = [segue destinationViewController];
-        
         [vc setTitulo:  titulo_selected ];
         [vc setRuta_descarga:url_selected];
         [vc setRuta_portada: url_portada_selected ];
@@ -508,57 +504,45 @@ PagedImageScrollView *pageScrollView ;
 
 - (void)dismissReaderViewController:(ReaderViewController *)viewController
 {
-    NSLog(@"Cerrando");
 	[self dismissViewControllerAnimated:YES completion:NULL];
-    
 }
 
 
 
 -(void) leerRevista:(id)sender {
     
-    
     UITableViewCell *clickedCell = (UITableViewCell *)[[[[sender superview] superview] superview ]  superview];
     NSIndexPath *clickedButtonIndexPath = [self.tableview indexPathForCell:clickedCell];
     
-    
     NSString* ruta = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
-    
-    
     NSString* theFileName = [[NSFileManager defaultManager] displayNameAtPath:ruta ] ;
     
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
+
     
-    BOOL existe =   [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
-    
-    
-    
-    NSString *phrase = nil; // Document password (for unlocking most encrypted PDF files)
-    
-	NSArray *pdfs = [[NSBundle mainBundle] pathsForResourcesOfType:@"pdf" inDirectory:nil];
-    
-	NSString *filePath = [pdfs lastObject]; assert(filePath != nil); // Path to last PDF file
-    
-	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:phrase];
-    
-    
-    //	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil];
-    
-	if (document != nil)
-	{
-		readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
-		readerViewController.delegate = self; // Set the ReaderViewController delegate to self
+    @try
+    {
+	ReaderDocument *document = [ReaderDocument withDocumentFilePath:archivoDescargar password:nil ];
         
-        readerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-		readerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    if (document != nil)
+        {
+            readerViewController = [[ReaderViewController alloc] initWithReaderDocument:document];
+            readerViewController.delegate = self;
+            
+            readerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            readerViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            
+            [self presentViewController:readerViewController animated:YES completion:NULL];
+            
+    }
         
-        
-		[self presentViewController:readerViewController animated:YES completion:NULL];
-        
-	}
+    }@catch (NSException *ex) {
     
+        [self descargar:sender];
+    }
     
+	
     
 }
 
@@ -590,11 +574,11 @@ PagedImageScrollView *pageScrollView ;
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString* archivoDescargar = [documentsPath stringByAppendingPathComponent: theFileName  ];
     
-    BOOL existe =   [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
-    if (existe) {
-        NSLog(@"archivo si existe en descarga");
-        return;
-    }
+//    BOOL existe =   [[NSFileManager defaultManager] fileExistsAtPath:archivoDescargar];
+//    if (existe) {
+//        NSLog(@"archivo si existe en descarga");
+//        return;
+//    }
     
     
     
@@ -603,10 +587,12 @@ PagedImageScrollView *pageScrollView ;
     //
     NSURL *URL = [NSURL URLWithString: ruta   ];
     
-    SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
+//    SKProduct * product = (SKProduct *) _products[clickedButtonIndexPath.row];
+    RevistaEntity* data = [revistas_data_db objectAtIndex: clickedButtonIndexPath.row ];
+    SKProduct * product = [self getProductoPorCodigo:  [data codigo_iphone] ];
     
     
-    NSDictionary* data = [  revistas_data objectAtIndex: clickedButtonIndexPath.row  ];
+
     
     //url_selected = [ NSString stringWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga" ]  ];
     url_selected = [self getRutaDescargaDe:@"revista" delIndice: clickedButtonIndexPath.row ];
@@ -617,16 +603,12 @@ PagedImageScrollView *pageScrollView ;
     url_selected = ruta ;
     
     
-    url_portada_selected = [ NSString stringWithFormat:@"%@%@" , url_base_portada , [data objectForKey:@"url_portada" ]  ];
+    url_portada_selected = [ NSString stringWithFormat:@"%@%@" , url_base_portada , [data url_portada ]  ];
     NSLog(@" url descarga revista %@" , url_selected );
     url_portada_selected = [self getRutaDescargaDe:@"portada" delIndice: clickedButtonIndexPath.row ];
     
     
     titulo_selected = product.localizedTitle;
-    //    url_selected = [revista  objectForKey:@"url_descarga" ]   ;
-    
-    
-    
     
     
     [self performSegueWithIdentifier:@"descarga" sender:self ];
@@ -638,8 +620,6 @@ PagedImageScrollView *pageScrollView ;
 
 
 -(void) acciones{
-    
-    
     
     NSUserDefaults* defaults = [NSUserDefaults  standardUserDefaults ];
     NSString* cerrar = [ defaults objectForKey:@"cerrar" ];
@@ -653,15 +633,13 @@ PagedImageScrollView *pageScrollView ;
     }
     
     if (recargar != nil) {
-        
-        //        [self reload];
+
         [self.tableview reloadData];
         
         [ defaults setObject:nil forKey:@"recargar"];
         [defaults synchronize ];
     }
-    
-    
+
 }
 
 
@@ -725,36 +703,47 @@ PagedImageScrollView *pageScrollView ;
 //        url = [[NSString alloc] initWithFormat:@"%@%@" , url_base_revista , [data objectForKey:@"url_descarga"] ];
 //    }
     
-    
-    
-    
-    
-    
-    
-    
     return url ;
     
 }
 
 
 
--(IBAction)mostrarInfo:(id)sender{
-    
-    [self performSegueWithIdentifier:@"mostrarInfo" sender:self];
-    
+-(SKProduct*) getProductoPorCodigo:(NSString*) codigo_iphone {
+
+    for (SKProduct* producto in _products) {
+        if ([producto.productIdentifier isEqualToString: codigo_iphone] ) {
+            return producto;
+        }
+    }
+    return NULL;
 }
 
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-    
-    NSLog(@"test");
+
+
+-(IBAction)mostrarInfo:(id)sender{
+    [self performSegueWithIdentifier:@"mostrarInfo" sender:self];
 }
+
+
+
+-(IBAction)productoNoDisponible:(id)sender{
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Trading Risk"
+                                                   message: @"Producto no disponible temporalmente"
+                                                  delegate: self
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil ,nil];
+    
+    [alert setTag:1];
+    [alert show];
+}
+
+
 
 
 - (void)cambiarSlider{
-    
     [pageScrollView cambiarPagina ];
-    
-    NSLog(@"cambiar slider ejecutado");
 }
 
 

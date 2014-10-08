@@ -131,14 +131,10 @@
 - (void)cambiarPagina
 {
     
-    NSLog(@"mostrando pagina %d de %d paginas " , self.pageControl.currentPage , self.pageControl.numberOfPages);
-    
     if (self.pageControl.currentPage +1  >= self.pageControl.numberOfPages )
                 self.pageControl.currentPage = 0;
     else
         self.pageControl.currentPage = self.pageControl.currentPage + 1 ;
-
-    
     
     CGRect frame = self.scrollView.frame;
     frame.origin.x = frame.size.width * self.pageControl.currentPage;
